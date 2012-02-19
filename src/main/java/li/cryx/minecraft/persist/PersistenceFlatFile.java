@@ -14,10 +14,13 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Persist plugin data to flat files (YAML format).
+ * Persist plugin data to flat files (YAML format). There is a mechanism to
+ * store complete <code>ItemStack</code>s using YAML. (ItemStack = item instance
+ * in game world.)
  * 
  * @author cryxli
  */
+// TODO test enchanted items
 public class PersistenceFlatFile extends AbstractPersistManager {
 
 	// private final File countFolder;

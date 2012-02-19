@@ -24,6 +24,11 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 
+/**
+ * This enum helps to determine which living entity you're facing.
+ * 
+ * @author cryxli
+ */
 public enum LivingEntityType {
 	PLAYER("P"), //
 	ZOMBIE("Z"), //
@@ -48,6 +53,13 @@ public enum LivingEntityType {
 	PIG("PG"), //
 	WOLF("W");
 
+	/**
+	 * Get the type of the given entity instance.
+	 * 
+	 * @param entity
+	 *            <code>LivingEntity</code> to inspect.
+	 * @return Entity type, or, <code>null</code>.
+	 */
 	public static LivingEntityType getType(final LivingEntity entity) {
 		if (entity instanceof Player) {
 			return PLAYER;
@@ -101,6 +113,7 @@ public enum LivingEntityType {
 		return null;
 	}
 
+	// TODO short names ... ?
 	private final String shortName;
 
 	private LivingEntityType(final String shortName) {

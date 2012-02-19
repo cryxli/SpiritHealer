@@ -19,14 +19,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Death extends JavaPlugin {
 
+	/** Capture player deaths. */
 	private DeathListener playerListener;
 
+	/** Capture altar creation */
 	private BlockListener blockListener;
 
+	/** Capture prayers on altars. */
 	private PlayerInteractListener altarListener;
 
+	/** Remember locations of altars. */
 	private final List<Location> altars = new LinkedList<Location>();
 
+	/** Store inventories on death */
 	private AbstractPersistManager persist;
 
 	/**
@@ -34,13 +39,13 @@ public class Death extends JavaPlugin {
 	 * 
 	 * @param location
 	 */
-	public void addAlterLocation(final Location location) {
+	public void addAltarLocation(final Location location) {
 		System.out.println(location);
 
 		if (location != null && !isAltar(location)) {
 			altars.add(location);
 
-			// TODO store altar location
+			// store altar location
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("world", location.getWorld().getName());
 			map.put("x", location.getBlockX());
@@ -139,14 +144,18 @@ public class Death extends JavaPlugin {
 	void restoreItems(final Player player) {
 		List<ItemStack> items = persist.restoreItems(player);
 		if (items == null || items.size() == 0) {
+			// nothing to recover
 			return;
 		}
 
+		// player's location is 1.6 blocks above ground
+		// so player will immediately collect drops
 		Location location = player.getLocation();
 		World world = player.getWorld();
 		for (ItemStack item : items) {
 			world.dropItem(location, item);
 		}
+		// prevent double collecting
 		persist.deleteItems(player);
 	}
 }

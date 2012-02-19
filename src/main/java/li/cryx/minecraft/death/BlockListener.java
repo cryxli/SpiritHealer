@@ -9,6 +9,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+/**
+ * Listen for new altars. Whenever a player (probably op) will place an
+ * EnderStone on an Obsidian block, the EnderStone will be treated as a new
+ * Spirit Altar. This only holds for worlds with type NORMAL, not End, nor
+ * Nether.
+ * 
+ * @author cryxli
+ */
 public class BlockListener implements Listener {
 
 	private final Death plugin;
@@ -17,6 +25,11 @@ public class BlockListener implements Listener {
 		this.plugin = plugin;
 	}
 
+	/**
+	 * Listen to block placement events.
+	 * 
+	 * @param event
+	 */
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBlockPlace(final BlockPlaceEvent event) {
 		Block block = event.getBlockPlaced();
@@ -32,7 +45,7 @@ public class BlockListener implements Listener {
 		}
 
 		// EnderStone was placed on Obsidian -> new altar
-		plugin.addAlterLocation(block.getLocation());
+		plugin.addAltarLocation(block.getLocation());
 	}
 
 }
