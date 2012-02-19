@@ -30,28 +30,28 @@ import org.bukkit.entity.Zombie;
  * @author cryxli
  */
 public enum LivingEntityType {
-	PLAYER("P"), //
-	ZOMBIE("Z"), //
-	SPIDER("S"), //
-	SKELETON("SK"), //
-	CREEPER("C"), //
-	CAVE_SPIDER("CS"), //
-	ENDERMAN("E"), //
-	DRAGON("D"), //
-	BLAZE("B"), //
-	PIGMAN("PM"), //
-	SILVERFISH("SF"), //
-	VILLAGER("V"), //
-	SQUID("SQ"), //
-	GHAST("G"), //
-	SLIME("SL"), //
-	MAGMA_CUBE("M"), //
-	MOOSHROOM("MS"), //
-	COW("CW"), //
-	CHICKEN("CK"), //
-	SHEEP("SH"), //
-	PIG("PG"), //
-	WOLF("W");
+	PLAYER(LivingEntityAffection.PVP), //
+	ZOMBIE(LivingEntityAffection.AGGRESSIVE), //
+	SPIDER(LivingEntityAffection.AGGRESSIVE), //
+	SKELETON(LivingEntityAffection.AGGRESSIVE), //
+	CREEPER(LivingEntityAffection.AGGRESSIVE), //
+	CAVE_SPIDER(LivingEntityAffection.AGGRESSIVE), //
+	ENDERMAN(LivingEntityAffection.NEUTRAL), //
+	DRAGON(LivingEntityAffection.AGGRESSIVE), //
+	BLAZE(LivingEntityAffection.AGGRESSIVE), //
+	PIGMAN(LivingEntityAffection.NEUTRAL), //
+	SILVERFISH(LivingEntityAffection.AGGRESSIVE), //
+	VILLAGER(LivingEntityAffection.FRIENDLY), //
+	SQUID(LivingEntityAffection.FRIENDLY), //
+	GHAST(LivingEntityAffection.AGGRESSIVE), //
+	SLIME(LivingEntityAffection.AGGRESSIVE), //
+	MAGMA_CUBE(LivingEntityAffection.AGGRESSIVE), //
+	MOOSHROOM(LivingEntityAffection.FRIENDLY), //
+	COW(LivingEntityAffection.FRIENDLY), //
+	CHICKEN(LivingEntityAffection.FRIENDLY), //
+	SHEEP(LivingEntityAffection.FRIENDLY), //
+	PIG(LivingEntityAffection.FRIENDLY), //
+	WOLF(LivingEntityAffection.NEUTRAL);
 
 	/**
 	 * Get the type of the given entity instance.
@@ -113,14 +113,29 @@ public enum LivingEntityType {
 		return null;
 	}
 
-	// TODO short names ... ?
-	private final String shortName;
+	private final LivingEntityAffection affection;
 
-	private LivingEntityType(final String shortName) {
-		this.shortName = shortName;
+	private LivingEntityType(final LivingEntityAffection affection) {
+		this.affection = affection;
 	}
 
-	public String getShortName() {
-		return shortName;
+	public LivingEntityAffection getAffection() {
+		return affection;
+	}
+
+	public boolean isAggressive() {
+		return affection == LivingEntityAffection.AGGRESSIVE;
+	}
+
+	public boolean isFriendly() {
+		return affection == LivingEntityAffection.FRIENDLY;
+	}
+
+	public boolean isNeutral() {
+		return affection == LivingEntityAffection.NEUTRAL;
+	}
+
+	public boolean isPvp() {
+		return affection == LivingEntityAffection.PVP;
 	}
 }

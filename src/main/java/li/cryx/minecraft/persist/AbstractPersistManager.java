@@ -2,6 +2,8 @@ package li.cryx.minecraft.persist;
 
 import java.util.List;
 
+import li.cryx.minecraft.util.LivingEntityType;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,6 +38,23 @@ public abstract class AbstractPersistManager {
 	 * @return <code>true</code>, if there are items to recover.
 	 */
 	public abstract boolean hasInventory(Player player);
+
+	/**
+	 * Increase the amount of entities that killed the given player.
+	 * 
+	 * @param player
+	 * @param type
+	 */
+	public abstract void increaseKilled(Player player, LivingEntityType type);
+
+	/**
+	 * Increase the amount of entities of the given type the given player
+	 * killed.
+	 * 
+	 * @param player
+	 * @param type
+	 */
+	public abstract void increaseKills(Player player, LivingEntityType type);
 
 	/**
 	 * Store player's inventory.

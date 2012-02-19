@@ -2,11 +2,18 @@ package li.cryx.minecraft.persist;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 
+import li.cryx.minecraft.util.LivingEntityType;
+
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,22 +28,28 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author cryxli
  */
 // TODO test enchanted items
+// TODO implement timed save of dirty stats (kills)
 public class PersistenceFlatFile extends AbstractPersistManager {
 
-	// private final File countFolder;
+	/** Folder that contains killing stats. */
+	private final File countFolder;
 
 	/** Folder that contains inventories. */
 	private final File itemFolder;
+
+	private final Map<Player, FileConfiguration> kills = new HashMap<Player, FileConfiguration>();
+
+	private final Set<FileConfiguration> dirty = new HashSet<FileConfiguration>();
 
 	public PersistenceFlatFile(final JavaPlugin plugin) {
 		super(plugin);
 
 		File rootFolder = plugin.getDataFolder();
-		// countFolder = new File(rootFolder, "stats");
-		// if (!countFolder.mkdirs()) {
-		// plugin.getLogger().log(Level.SEVERE,
-		// "Failed to create stats folder");
-		// }
+		countFolder = new File(rootFolder, "stats");
+		if (!countFolder.mkdirs()) {
+			plugin.getLogger().log(Level.SEVERE,
+					"Failed to create stats folder");
+		}
 		itemFolder = new File(rootFolder, "inventory");
 		if (!itemFolder.mkdirs()) {
 			plugin.getLogger().log(Level.SEVERE,
@@ -53,9 +66,69 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 		}
 	}
 
+	private FileConfiguration getKills(final Player player) {
+		FileConfiguration kp = kills.get(player);
+		if (kp == null) {
+			kp = YamlConfiguration.loadConfiguration(new File(countFolder,
+					player.getName().toLowerCase() + ".yml"));
+			kills.put(player, kp);
+		}
+		return kp;
+	}
+
 	@Override
 	public boolean hasInventory(final Player player) {
 		return itemsFile(player).exists();
+	}
+
+	@Override
+	public void increaseKilled(final Player player, final LivingEntityType type) {
+		FileConfiguration conf = getKills(player);
+
+		String key;
+		switch (type.getAffection()) {
+		case AGGRESSIVE:
+			key = "KilledByAggro";
+			break;
+		default:
+		case FRIENDLY:
+			key = "KilledByFriend";
+			break;
+		case NEUTRAL:
+			key = "KilledByNeutral";
+			break;
+		case PVP:
+			key = "KilledByPvp";
+			break;
+		}
+
+		conf.set(key, 1 + conf.getInt(key));
+		dirty.add(conf);
+	}
+
+	@Override
+	public void increaseKills(final Player player, final LivingEntityType type) {
+		FileConfiguration conf = getKills(player);
+
+		String key;
+		switch (type.getAffection()) {
+		case AGGRESSIVE:
+			key = "KilledAggro";
+			break;
+		default:
+		case FRIENDLY:
+			key = "KilledFriend";
+			break;
+		case NEUTRAL:
+			key = "KilledNeutral";
+			break;
+		case PVP:
+			key = "KilledPvp";
+			break;
+		}
+
+		conf.set(key, 1 + conf.getInt(key));
+		dirty.add(conf);
 	}
 
 	/**

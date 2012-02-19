@@ -29,21 +29,23 @@ public class DeathListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	private void findKiller(final EntityDamageEvent dmg) {
-		System.out.println(" " + dmg.getCause());
+	/**
+	 * Get the <code>LivingEntity</code> that landed the final stroke.
+	 * 
+	 * @param dmg
+	 *            The last event causing damage on a dying entity.
+	 * @return Killing <code>LivingEntity</code>, or, <code>null</code>.
+	 */
+	private LivingEntity findKiller(final EntityDamageEvent dmg) {
 		if (dmg instanceof EntityDamageByEntityEvent) {
 			Entity damager = ((EntityDamageByEntityEvent) dmg).getDamager();
 			if (damager instanceof Projectile) {
-				LivingEntity shooter = ((Projectile) damager).getShooter();
-				System.out.println(" " + shooter + " (" + shooter.getEntityId()
-						+ ")");
-			} else if (damager != null) {
-				System.out.println(" " + damager + " (" + damager.getEntityId()
-						+ ")");
-			} else {
-				System.out.println(" unknown");
+				return ((Projectile) damager).getShooter();
+			} else if (damager != null && damager instanceof LivingEntity) {
+				return (LivingEntity) damager;
 			}
 		}
+		return null;
 	}
 
 	/**
