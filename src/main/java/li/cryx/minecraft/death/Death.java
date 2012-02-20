@@ -10,10 +10,14 @@ import li.cryx.minecraft.death.listener.BlockListener;
 import li.cryx.minecraft.death.listener.DeathListener;
 import li.cryx.minecraft.death.listener.PlayerInteractListener;
 import li.cryx.minecraft.death.persist.AbstractPersistManager;
+import li.cryx.minecraft.death.persist.FragsInfo;
 import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -116,6 +120,22 @@ public class Death extends JavaPlugin {
 	}
 
 	@Override
+	public boolean onCommand(final CommandSender sender, final Command command,
+			final String label, final String[] args) {
+		if (sender instanceof Player) {
+			FragsInfo info = getPersist().getFrags((Player) sender);
+			if ("full".equalsIgnoreCase(getConfig().getString("FragsDisplay"))) {
+				sendFull(sender, info);
+			} else {
+				sendMinimal(sender, info);
+			}
+			return true;
+		} else {
+			return super.onCommand(sender, command, label, args);
+		}
+	}
+
+	@Override
 	public void onDisable() {
 		persist.shutdown();
 		persist = null;
@@ -160,5 +180,114 @@ public class Death extends JavaPlugin {
 		}
 		// prevent double collecting
 		persist.deleteItems(player);
+	}
+
+	private void sendFull(final CommandSender sender, final FragsInfo info) {
+		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
+
+		StringBuffer buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("PVP: ");
+		buf.append(ChatColor.GREEN);
+		buf.append(info.getPvpKills());
+		buf.append(ChatColor.YELLOW);
+		buf.append("/");
+		buf.append(ChatColor.RED);
+		buf.append(info.getPvpKillers());
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Aggressive mobs: ");
+		buf.append(ChatColor.GREEN);
+		buf.append(info.getAggroKills());
+		buf.append(ChatColor.YELLOW);
+		buf.append("/");
+		buf.append(ChatColor.RED);
+		buf.append(info.getAggroKillers());
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Neutral mobs: ");
+		buf.append(ChatColor.GREEN);
+		buf.append(info.getNeutralKills());
+		buf.append(ChatColor.YELLOW);
+		buf.append("/");
+		buf.append(ChatColor.RED);
+		buf.append(info.getNeutralKillers());
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Friendly mobs: ");
+		buf.append(ChatColor.GREEN);
+		buf.append(info.getFriendlyKills());
+		buf.append(ChatColor.YELLOW);
+		buf.append("/");
+		buf.append(ChatColor.RED);
+		buf.append(info.getFriendlyKillers());
+		sender.sendMessage(buf.toString());
+	}
+
+	private void sendMinimal(final CommandSender sender, final FragsInfo info) {
+		int pvp = info.getPvpKills() - info.getPvpKillers();
+		int aggro = info.getAggroKills() - info.getAggroKillers();
+		int neutral = info.getNeutralKills() - info.getNeutralKillers();
+		int friend = info.getFriendlyKills() - info.getFriendlyKillers();
+
+		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
+
+		StringBuffer buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("PVP: ");
+		if (pvp == 0) {
+			buf.append(ChatColor.WHITE);
+		} else if (pvp < 0) {
+			buf.append(ChatColor.RED);
+		} else {
+			buf.append(ChatColor.GREEN);
+		}
+		buf.append(pvp);
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Aggressive mobs: ");
+		if (aggro == 0) {
+			buf.append(ChatColor.WHITE);
+		} else if (aggro < 0) {
+			buf.append(ChatColor.RED);
+		} else {
+			buf.append(ChatColor.GREEN);
+		}
+		buf.append(aggro);
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Neutral mobs: ");
+		if (neutral == 0) {
+			buf.append(ChatColor.WHITE);
+		} else if (neutral < 0) {
+			buf.append(ChatColor.RED);
+		} else {
+			buf.append(ChatColor.GREEN);
+		}
+		buf.append(neutral);
+		sender.sendMessage(buf.toString());
+
+		buf = new StringBuffer();
+		buf.append(ChatColor.YELLOW);
+		buf.append("Friendly mobs: ");
+		if (friend == 0) {
+			buf.append(ChatColor.WHITE);
+		} else if (friend < 0) {
+			buf.append(ChatColor.RED);
+		} else {
+			buf.append(ChatColor.GREEN);
+		}
+		buf.append(friend);
+		sender.sendMessage(buf.toString());
 	}
 }

@@ -3,3 +3,7 @@ main: ${main.class}
 version: ${project.version}
 description: >
              ${project.name} is a death/frag plugin for bukkit.
+
+commands:
+  frags:
+    description: Returns information about how many entites a player killed.
