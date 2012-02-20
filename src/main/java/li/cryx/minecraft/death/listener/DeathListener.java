@@ -1,7 +1,8 @@
-package li.cryx.minecraft.death;
+package li.cryx.minecraft.death.listener;
 
 import java.util.logging.Level;
 
+import li.cryx.minecraft.death.Death;
 import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.entity.Entity;
@@ -58,21 +59,20 @@ public class DeathListener implements Listener {
 	public void onNpcDeath(final EntityDeathEvent event) {
 		if (event instanceof PlayerDeathEvent) {
 			processPlayerDeath((PlayerDeathEvent) event);
-
-			// } else {
-			// processNpcDeath((LivingEntity) event.getEntity());
+		} else {
+			processNpcDeath((LivingEntity) event.getEntity());
 		}
 	}
 
 	private void processNpcDeath(final LivingEntity entity) {
-		LivingEntityType let = LivingEntityType.getType(entity);
-		System.out.println(let + " died " + entity.getEntityId());
-		System.out.println(" killer=" + entity.getKiller());
+		LivingEntityType type = LivingEntityType.getType(entity);
 
-		// TODO Auto-generated method stub
-
-		EntityDamageEvent dmg = entity.getLastDamageCause();
-		findKiller(dmg);
+		LivingEntity killer = findKiller(entity.getLastDamageCause());
+		if (killer != null && killer instanceof Player) {
+			Player player = (Player) killer;
+			plugin.getPersist().increaseKills(player, type);
+			plugin.getLogger().fine(type + " killed by " + player.getName());
+		}
 	}
 
 	/**
@@ -92,11 +92,14 @@ public class DeathListener implements Listener {
 		} else {
 			player.sendMessage("The Spirit Healer cannot recover your items.");
 		}
-
 		plugin.getLogger().log(Level.INFO, player.getName() + " died");
 
-		// EntityDamageEvent dmg = player.getLastDamageCause();
-		// findKiller(dmg);
+		// count frags
+		LivingEntity killer = findKiller(player.getLastDamageCause());
+		if (killer != null) {
+			plugin.getPersist().increaseKilled(player,
+					LivingEntityType.getType(killer));
+		}
 	}
 
 }

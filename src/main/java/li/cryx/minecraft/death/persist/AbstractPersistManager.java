@@ -1,4 +1,4 @@
-package li.cryx.minecraft.persist;
+package li.cryx.minecraft.death.persist;
 
 import java.util.List;
 
@@ -29,6 +29,8 @@ public abstract class AbstractPersistManager {
 	 * @see #persistItems(Player)
 	 */
 	public abstract void deleteItems(final Player player);
+
+	public abstract FragsInfo getFrags(Player player);
 
 	/**
 	 * Check whether the given player has not recovered items.

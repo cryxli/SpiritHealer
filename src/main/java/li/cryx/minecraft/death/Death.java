@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import li.cryx.minecraft.persist.AbstractPersistManager;
-import li.cryx.minecraft.persist.PersistenceFlatFile;
+import li.cryx.minecraft.death.listener.BlockListener;
+import li.cryx.minecraft.death.listener.DeathListener;
+import li.cryx.minecraft.death.listener.PlayerInteractListener;
+import li.cryx.minecraft.death.persist.AbstractPersistManager;
+import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -71,7 +74,7 @@ public class Death extends JavaPlugin {
 		pm.registerEvents(altarListener, this);
 	}
 
-	AbstractPersistManager getPersist() {
+	public AbstractPersistManager getPersist() {
 		return persist;
 	}
 
@@ -141,7 +144,7 @@ public class Death extends JavaPlugin {
 		getLogger().info(getDescription().getFullName() + " enabled");
 	}
 
-	void restoreItems(final Player player) {
+	public void restoreItems(final Player player) {
 		List<ItemStack> items = persist.restoreItems(player);
 		if (items == null || items.size() == 0) {
 			// nothing to recover

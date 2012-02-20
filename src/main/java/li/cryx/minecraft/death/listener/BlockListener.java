@@ -1,4 +1,6 @@
-package li.cryx.minecraft.death;
+package li.cryx.minecraft.death.listener;
+
+import li.cryx.minecraft.death.Death;
 
 import org.bukkit.Material;
 import org.bukkit.WorldType;
