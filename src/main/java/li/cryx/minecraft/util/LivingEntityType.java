@@ -1,28 +1,6 @@
 package li.cryx.minecraft.util;
 
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.CaveSpider;
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EnderDragon;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Ghast;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.MushroomCow;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Sheep;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Slime;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.Squid;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Wolf;
-import org.bukkit.entity.Zombie;
 
 /**
  * This enum helps to determine which living entity you're facing.
@@ -37,21 +15,22 @@ public enum LivingEntityType {
 	CREEPER(LivingEntityAffection.AGGRESSIVE), //
 	CAVE_SPIDER(LivingEntityAffection.AGGRESSIVE), //
 	ENDERMAN(LivingEntityAffection.NEUTRAL), //
-	DRAGON(LivingEntityAffection.AGGRESSIVE), //
+	ENDER_DRAGON(LivingEntityAffection.AGGRESSIVE), //
 	BLAZE(LivingEntityAffection.AGGRESSIVE), //
-	PIGMAN(LivingEntityAffection.NEUTRAL), //
+	PIG_ZOMBIE(LivingEntityAffection.NEUTRAL), //
 	SILVERFISH(LivingEntityAffection.AGGRESSIVE), //
 	VILLAGER(LivingEntityAffection.FRIENDLY), //
 	SQUID(LivingEntityAffection.FRIENDLY), //
 	GHAST(LivingEntityAffection.AGGRESSIVE), //
 	SLIME(LivingEntityAffection.AGGRESSIVE), //
 	MAGMA_CUBE(LivingEntityAffection.AGGRESSIVE), //
-	MOOSHROOM(LivingEntityAffection.FRIENDLY), //
+	MUSHROOM_COW(LivingEntityAffection.FRIENDLY), //
 	COW(LivingEntityAffection.FRIENDLY), //
 	CHICKEN(LivingEntityAffection.FRIENDLY), //
 	SHEEP(LivingEntityAffection.FRIENDLY), //
 	PIG(LivingEntityAffection.FRIENDLY), //
 	WOLF(LivingEntityAffection.NEUTRAL);
+	// OCELOT(LivingEntityAffection.NEUTRAL);
 
 	/**
 	 * Get the type of the given entity instance.
@@ -61,56 +40,56 @@ public enum LivingEntityType {
 	 * @return Entity type, or, <code>null</code>.
 	 */
 	public static LivingEntityType getType(final LivingEntity entity) {
-		if (entity instanceof Player) {
+		switch (entity.getType()) {
+		case PLAYER:
 			return PLAYER;
-		} else if (entity instanceof CaveSpider) {
-			// CaveSpider is a Spider
+		case CAVE_SPIDER:
 			return CAVE_SPIDER;
-		} else if (entity instanceof Spider) {
+		case SPIDER:
 			return SPIDER;
-		} else if (entity instanceof Skeleton) {
+		case SKELETON:
 			return SKELETON;
-		} else if (entity instanceof Creeper) {
+		case CREEPER:
 			return CREEPER;
-		} else if (entity instanceof Enderman) {
+		case ENDERMAN:
 			return ENDERMAN;
-		} else if (entity instanceof EnderDragon) {
-			return DRAGON;
-		} else if (entity instanceof Blaze) {
+		case ENDER_DRAGON:
+			return ENDER_DRAGON;
+		case BLAZE:
 			return BLAZE;
-		} else if (entity instanceof PigZombie) {
-			// Zombie-Pigman is a Zombie
-			return PIGMAN;
-		} else if (entity instanceof Zombie) {
+		case PIG_ZOMBIE:
+			return PIG_ZOMBIE;
+		case ZOMBIE:
 			return ZOMBIE;
-		} else if (entity instanceof Silverfish) {
+		case SILVERFISH:
 			return SILVERFISH;
-		} else if (entity instanceof Villager) {
+		case VILLAGER:
 			return VILLAGER;
-		} else if (entity instanceof Squid) {
+		case SQUID:
 			return SQUID;
-		} else if (entity instanceof Ghast) {
+		case GHAST:
 			return GHAST;
-		} else if (entity instanceof MagmaCube) {
+		case MAGMA_CUBE:
 			return MAGMA_CUBE;
-		} else if (entity instanceof Slime) {
+		case SLIME:
 			return SLIME;
-		} else if (entity instanceof MushroomCow) {
-			// Mooshroom is a Cow
-			return MOOSHROOM;
-		} else if (entity instanceof Cow) {
+		case MUSHROOM_COW:
+			return MUSHROOM_COW;
+		case COW:
 			return COW;
-		} else if (entity instanceof Chicken) {
+		case CHICKEN:
 			return CHICKEN;
-		} else if (entity instanceof Sheep) {
+		case SHEEP:
 			return SHEEP;
-		} else if (entity instanceof Pig) {
+		case PIG:
 			return PIG;
-		} else if (entity instanceof Wolf) {
+		case WOLF:
 			return WOLF;
+			// case OCELOT:
+			// return OCELOT;
+		default:
+			return null;
 		}
-
-		return null;
 	}
 
 	private final LivingEntityAffection affection;

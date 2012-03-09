@@ -1,7 +1,5 @@
 package li.cryx.minecraft.death.listener;
 
-import java.util.logging.Level;
-
 import li.cryx.minecraft.death.Death;
 import li.cryx.minecraft.util.LivingEntityType;
 
@@ -60,7 +58,7 @@ public class DeathListener implements Listener {
 		if (event instanceof PlayerDeathEvent) {
 			processPlayerDeath((PlayerDeathEvent) event);
 		} else {
-			processNpcDeath((LivingEntity) event.getEntity());
+			processNpcDeath(event.getEntity());
 		}
 	}
 
@@ -82,7 +80,7 @@ public class DeathListener implements Listener {
 	 *            The <code>PlayerDeathEvent</code>
 	 */
 	private void processPlayerDeath(final PlayerDeathEvent event) {
-		Player player = (Player) event.getEntity();
+		Player player = event.getEntity();
 		// persisting player's items
 		boolean success = plugin.getPersist().persistItems(player);
 
@@ -92,7 +90,7 @@ public class DeathListener implements Listener {
 		} else {
 			player.sendMessage("The Spirit Healer cannot recover your items.");
 		}
-		plugin.getLogger().log(Level.INFO, player.getName() + " died");
+		plugin.getLogger().info(player.getName() + " died");
 
 		// count frags
 		LivingEntity killer = findKiller(player.getLastDamageCause());
