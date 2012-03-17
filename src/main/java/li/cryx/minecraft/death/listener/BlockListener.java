@@ -2,7 +2,6 @@ package li.cryx.minecraft.death.listener;
 
 import li.cryx.minecraft.death.Death;
 
-import org.bukkit.Material;
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,16 +36,16 @@ public class BlockListener implements Listener {
 		Block block = event.getBlockPlaced();
 		if (block.getWorld().getWorldType() != WorldType.NORMAL) {
 			return;
-		} else if (block.getType() != Material.ENDER_STONE) {
+		} else if (block.getType() != plugin.getAltarMaterial()) {
 			return;
 		}
 
 		Block below = block.getRelative(BlockFace.DOWN);
-		if (below.getType() != Material.OBSIDIAN) {
+		if (below.getType() != plugin.getAltarBaseMaterial()) {
 			return;
 		}
 
-		// EnderStone was placed on Obsidian -> new altar
+		// AltarMaterial was placed on AltarBaseMaterial -> new altar
 		plugin.addAltarLocation(block.getLocation());
 	}
 

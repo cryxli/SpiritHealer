@@ -1,0 +1,41 @@
+SpiritHealer
+============
+
+This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's 1.2.3-R0.2 beta release. 
+
+
+Description
+-----------
+
+Similar to the Spirit Healer of WoW this plugin prevents item drops on player death. After respawn the players can visit a Spirit Altar to get their items back. Players can only get their own items not items of other players.
+
+The plugin also keeps track of whatever players kill. There are four categories:
+- PvP (Player vs. player kills)
+- Friendly mobs (Pigs, sheep...)
+- Neutral mobs (Endermen, Wolves...)
+- Aggressive mobs (Creeper, skeletons...)
+
+
+Installation
+------------
+
+Offline:
+- Build the plugin or download the JAR file
+- Copy the JAR file to the "plugins" folder of your bukkit server
+- Start the server once to generate the config file with default values
+- Modify the config file as you please
+
+In game:
+- Create a new spirit altar by placing an Ender Stone on top of an Obsidian block.
+- This only works in NORMAL worlds (not in the Nether or the End!)
+- Only Ender Stone placed on Obsidian while the plugin is running are recognised as altars
+- You can change the block types used to create alters in the config file of the plugin.
+
+
+Use
+---
+
+- In game type "/frags" to see your current death/kill count
+- After you died, visit a spirit altar to get your items back (Touch it with your bare hands.)
+- The altar will punish you, if you touch it with anything but your bare hands
+- If you die on the way to the altar, your inventory is lost. (Only one inventory is stored per player.)

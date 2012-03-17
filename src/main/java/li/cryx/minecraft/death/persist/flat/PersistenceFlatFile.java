@@ -24,9 +24,15 @@ import org.bukkit.plugin.java.JavaPlugin;
  * store complete <code>ItemStack</code>s using YAML. (ItemStack = item instance
  * in game world.)
  * 
+ * <p>
+ * This implementation will create one YML file per dead player. The contents of
+ * the file will be kept in memory for 5 minutes before it is unloaded. After
+ * that The YML structure has to be rebuild from the persisted file. This is
+ * done to prevent memory leaks.
+ * </p>
+ * 
  * @author cryxli
  */
-// TODO test enchanted items
 public class PersistenceFlatFile extends AbstractPersistManager {
 
 	/** How often to save files [ms]. Defaults to every 10s. */

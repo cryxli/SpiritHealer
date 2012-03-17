@@ -4,6 +4,11 @@ import li.cryx.minecraft.death.persist.FragsInfo;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+/**
+ * Implementation of {@link FragsInfo} for {@link PersistenceFlatFile}.
+ * 
+ * @author cryxli
+ */
 public class FragsInfoFlatFile implements FragsInfo {
 
 	static final class KILLED {

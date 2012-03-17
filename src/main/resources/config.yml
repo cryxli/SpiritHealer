@@ -19,3 +19,8 @@ Warn3: You annoyed the Spirit Healer.
 
 # how to display frags, values: MIN or FULL
 FragsDisplay: min
+
+# describe of what materials an altar is formed
+Material:
+  Altar: ENDER_STONE
+  AltarBase: OBSIDIAN

@@ -15,6 +15,7 @@ import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Main class of the plugin managing persistence and listeners.
+ * 
+ * @author cryxli
+ */
 public class Death extends JavaPlugin {
 
 	/** Capture player deaths. */
@@ -40,6 +46,10 @@ public class Death extends JavaPlugin {
 
 	/** Store inventories on death */
 	private AbstractPersistManager persist;
+
+	private Material altarMaterial;
+
+	private Material altarBaseMaterial;
 
 	/**
 	 * Add an altar at the given location.
@@ -78,6 +88,14 @@ public class Death extends JavaPlugin {
 		pm.registerEvents(altarListener, this);
 	}
 
+	public Material getAltarBaseMaterial() {
+		return altarBaseMaterial;
+	}
+
+	public Material getAltarMaterial() {
+		return altarMaterial;
+	}
+
 	public AbstractPersistManager getPersist() {
 		return persist;
 	}
@@ -95,6 +113,9 @@ public class Death extends JavaPlugin {
 		return false;
 	}
 
+	/**
+	 * Get the stored altar locations.
+	 */
 	private void loadAltarLocations() {
 		FileConfiguration conf = getConfig();
 
@@ -117,6 +138,37 @@ public class Death extends JavaPlugin {
 			counter++;
 			obj = conf.get("altar" + counter);
 		}
+	}
+
+	/**
+	 * Get the configured altar block and altar base block materials.
+	 * <p>
+	 * Default altar block is {@link Material#ENDER_STONE}, default altar base
+	 * block is {@link Material#OBSIDIAN}.
+	 * </p>
+	 */
+	private void loadAltarMaterials() {
+		FileConfiguration conf = getConfig();
+
+		// try block name
+		Material m = Material.matchMaterial(conf.getString("Material.Altar"));
+		if (m == null) {
+			// try block ID and set default
+			m = Material.getMaterial(conf.getInt("Material.Altar",
+					Material.ENDER_STONE.getId()));
+		}
+		altarMaterial = m;
+		conf.set("Material.Altar", altarMaterial.toString());
+
+		// try block name
+		m = Material.matchMaterial(conf.getString("Material.AltarBase"));
+		if (m == null) {
+			// try block ID and set default
+			m = Material.getMaterial(conf.getInt("Material.AltarBase",
+					Material.OBSIDIAN.getId()));
+		}
+		altarBaseMaterial = m;
+		conf.set("Material.AltarBase", altarBaseMaterial.toString());
 	}
 
 	@Override
@@ -150,10 +202,12 @@ public class Death extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		// create and process configuration
 		FileConfiguration config = getConfig();
 		config.options().copyDefaults(true);
-		saveConfig();
 		loadAltarLocations();
+		loadAltarMaterials();
+		saveConfig();
 
 		createListeners();
 
@@ -182,6 +236,7 @@ public class Death extends JavaPlugin {
 		persist.deleteItems(player);
 	}
 
+	/** Send the complete list of kills and deaths to the player. */
 	private void sendFull(final CommandSender sender, final FragsInfo info) {
 		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
 
@@ -230,6 +285,7 @@ public class Death extends JavaPlugin {
 		sender.sendMessage(buf.toString());
 	}
 
+	/** Send the minimalistic list of kills and deaths to the player. */
 	private void sendMinimal(final CommandSender sender, final FragsInfo info) {
 		int pvp = info.getPvpKills() - info.getPvpKillers();
 		int aggro = info.getAggroKills() - info.getAggroKillers();

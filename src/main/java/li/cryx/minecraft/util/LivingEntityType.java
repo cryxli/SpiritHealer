@@ -29,8 +29,8 @@ public enum LivingEntityType {
 	CHICKEN(LivingEntityAffection.FRIENDLY), //
 	SHEEP(LivingEntityAffection.FRIENDLY), //
 	PIG(LivingEntityAffection.FRIENDLY), //
-	WOLF(LivingEntityAffection.NEUTRAL);
-	// OCELOT(LivingEntityAffection.NEUTRAL);
+	WOLF(LivingEntityAffection.NEUTRAL), //
+	OCELOT(LivingEntityAffection.NEUTRAL);
 
 	/**
 	 * Get the type of the given entity instance.
@@ -85,8 +85,8 @@ public enum LivingEntityType {
 			return PIG;
 		case WOLF:
 			return WOLF;
-			// case OCELOT:
-			// return OCELOT;
+		case OCELOT:
+			return OCELOT;
 		default:
 			return null;
 		}
