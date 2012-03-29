@@ -87,9 +87,10 @@ public class PlayerInteractListener implements Listener {
 	}
 
 	/**
-	 * Warn and is necessary punish the given player.
+	 * Warn and if necessary, punish the given player.
 	 * 
 	 * @param player
+	 *            A player
 	 */
 	private void sendWarning(final Player player) {
 		int warn = getWarning(player);
@@ -104,7 +105,7 @@ public class PlayerInteractListener implements Listener {
 			player.sendMessage(plugin.getConfig().getString("Warn1"));
 			// half the hunger bar
 			player.setExhaustion(player.getExhaustion() / 2);
-			player.setFoodLevel((int) Math.ceil(player.getFoodLevel() / 2));
+			player.setFoodLevel((int) Math.ceil(player.getFoodLevel() / 2.0));
 			break;
 		case 3:
 			player.sendMessage(plugin.getConfig().getString("Warn2"));
