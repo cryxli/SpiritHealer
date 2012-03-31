@@ -1,7 +1,7 @@
 SpiritHealer
 ============
 
-This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's 1.2.3-R0.2 beta release. 
+This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's r1.2.4-R1.0 release. 
 
 
 Description
@@ -29,7 +29,7 @@ In game:
 - Create a new spirit altar by placing an Ender Stone on top of an Obsidian block.
 - This only works in NORMAL worlds (not in the Nether or the End!)
 - Only Ender Stone placed on Obsidian while the plugin is running are recognised as altars
-- You can change the block types used to create alters in the config file of the plugin.
+- You can change the block types used to create altars in the config file of the plugin.
 
 
 Use
