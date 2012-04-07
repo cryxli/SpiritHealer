@@ -12,6 +12,8 @@ import li.cryx.minecraft.death.listener.PlayerInteractListener;
 import li.cryx.minecraft.death.persist.AbstractPersistManager;
 import li.cryx.minecraft.death.persist.FragsInfo;
 import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
+import li.cryx.minecraft.util.LivingEntityAffection;
+import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -176,10 +178,28 @@ public class Death extends JavaPlugin {
 			final String label, final String[] args) {
 		if (sender instanceof Player) {
 			FragsInfo info = getPersist().getFrags((Player) sender);
-			if ("full".equalsIgnoreCase(getConfig().getString("FragsDisplay"))) {
-				sendFull(sender, info);
+
+			if (args.length == 0) {
+				// no arg to command, use config settings
+				if ("full".equalsIgnoreCase(getConfig().getString(
+						"FragsDisplay"))) {
+					sendFull(sender, info);
+				} else if ("detailed".equalsIgnoreCase(getConfig().getString(
+						"FragsDisplay"))) {
+					sendDetailed(sender, info);
+				} else {
+					sendMinimal(sender, info);
+				}
 			} else {
-				sendMinimal(sender, info);
+				// try to interpret command arg
+				String s = args[0];
+				if (s == null || s.length() == 0 || s.startsWith("m")) {
+					sendMinimal(sender, info);
+				} else if (s.startsWith("f")) {
+					sendFull(sender, info);
+				} else {
+					sendDetailed(sender, info);
+				}
 			}
 			return true;
 		} else {
@@ -236,6 +256,30 @@ public class Death extends JavaPlugin {
 		persist.deleteItems(player);
 	}
 
+	private void sendDetailed(final CommandSender sender, final FragsInfo info) {
+		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
+		boolean kills = false;
+		for (LivingEntityType t : LivingEntityType.values()) {
+			if (info.getKillers(t) > 0 || info.getKills(t) > 0) {
+				StringBuffer buf = new StringBuffer();
+				buf.append(ChatColor.YELLOW);
+				buf.append(t.toString());
+				buf.append(' ');
+				buf.append(ChatColor.GREEN);
+				buf.append(info.getKills(t));
+				buf.append(ChatColor.YELLOW);
+				buf.append("/");
+				buf.append(ChatColor.RED);
+				buf.append(info.getKillers(t));
+				sender.sendMessage(buf.toString());
+				kills = true;
+			}
+		}
+		if (!kills) {
+			sender.sendMessage(ChatColor.GOLD + "no kills/deaths yet");
+		}
+	}
+
 	/** Send the complete list of kills and deaths to the player. */
 	private void sendFull(final CommandSender sender, final FragsInfo info) {
 		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
@@ -244,53 +288,57 @@ public class Death extends JavaPlugin {
 		buf.append(ChatColor.YELLOW);
 		buf.append("PVP: ");
 		buf.append(ChatColor.GREEN);
-		buf.append(info.getPvpKills());
+		buf.append(info.getKills(LivingEntityAffection.PVP));
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getPvpKillers());
+		buf.append(info.getKillers(LivingEntityAffection.PVP));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
 		buf.append(ChatColor.YELLOW);
 		buf.append("Aggressive mobs: ");
 		buf.append(ChatColor.GREEN);
-		buf.append(info.getAggroKills());
+		buf.append(info.getKills(LivingEntityAffection.AGGRESSIVE));
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getAggroKillers());
+		buf.append(info.getKillers(LivingEntityAffection.AGGRESSIVE));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
 		buf.append(ChatColor.YELLOW);
 		buf.append("Neutral mobs: ");
 		buf.append(ChatColor.GREEN);
-		buf.append(info.getNeutralKills());
+		buf.append(info.getKills(LivingEntityAffection.NEUTRAL));
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getNeutralKillers());
+		buf.append(info.getKillers(LivingEntityAffection.NEUTRAL));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
 		buf.append(ChatColor.YELLOW);
 		buf.append("Friendly mobs: ");
 		buf.append(ChatColor.GREEN);
-		buf.append(info.getFriendlyKills());
+		buf.append(info.getKills(LivingEntityAffection.FRIENDLY));
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getFriendlyKillers());
+		buf.append(info.getKillers(LivingEntityAffection.FRIENDLY));
 		sender.sendMessage(buf.toString());
 	}
 
 	/** Send the minimalistic list of kills and deaths to the player. */
 	private void sendMinimal(final CommandSender sender, final FragsInfo info) {
-		int pvp = info.getPvpKills() - info.getPvpKillers();
-		int aggro = info.getAggroKills() - info.getAggroKillers();
-		int neutral = info.getNeutralKills() - info.getNeutralKillers();
-		int friend = info.getFriendlyKills() - info.getFriendlyKillers();
+		int pvp = info.getKills(LivingEntityAffection.PVP)
+				- info.getKillers(LivingEntityAffection.PVP);
+		int aggro = info.getKills(LivingEntityAffection.AGGRESSIVE)
+				- info.getKillers(LivingEntityAffection.AGGRESSIVE);
+		int neutral = info.getKills(LivingEntityAffection.NEUTRAL)
+				- info.getKillers(LivingEntityAffection.NEUTRAL);
+		int friend = info.getKills(LivingEntityAffection.FRIENDLY)
+				- info.getKillers(LivingEntityAffection.FRIENDLY);
 
 		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
 

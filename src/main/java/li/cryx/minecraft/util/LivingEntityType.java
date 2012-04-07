@@ -1,5 +1,8 @@
 package li.cryx.minecraft.util;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.bukkit.entity.LivingEntity;
 
 /**
@@ -96,6 +99,18 @@ public enum LivingEntityType {
 		default:
 			return null;
 		}
+	}
+
+	public static List<LivingEntityType> getTypes(
+			final LivingEntityAffection affection) {
+		List<LivingEntityType> list = new LinkedList<LivingEntityType>();
+		for (LivingEntityType type : values()) {
+			if (type.getAffection() == affection) {
+				list.add(type);
+			}
+		}
+
+		return list;
 	}
 
 	private final LivingEntityAffection affection;

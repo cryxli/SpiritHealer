@@ -12,6 +12,7 @@ import li.cryx.minecraft.death.persist.AbstractPersistManager;
 import li.cryx.minecraft.death.persist.FragsInfo;
 import li.cryx.minecraft.util.LivingEntityType;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -92,7 +93,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public void deleteItems(final Player player) {
-		File file = itemsFile(player);
+		File file = getInventoryFile(player);
 		if (!file.delete()) {
 			plugin.getLogger().log(Level.SEVERE,
 					"Unable to delete inventory for " + player.getName());
@@ -127,8 +128,25 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	}
 
 	@Override
+	public Location getDeathLocation(final Player player) {
+		// TODO Auto-generated method stub
+		return player.getWorld().getSpawnLocation().clone();
+	}
+
+	@Override
 	public FragsInfo getFrags(final Player player) {
 		return new FragsInfoFlatFile(getKills(player));
+	}
+
+	/**
+	 * Get the file containing the inventory for the given player.
+	 * 
+	 * @param player
+	 *            Player in question
+	 * @return A <code>File</code> object.
+	 */
+	private File getInventoryFile(final Player player) {
+		return new File(itemFolder, player.getName().toLowerCase() + ".yml");
 	}
 
 	private synchronized YamlConfiguration getKills(final Player player) {
@@ -144,68 +162,42 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public boolean hasInventory(final Player player) {
-		return itemsFile(player).exists();
+		return getInventoryFile(player).exists();
 	}
 
 	@Override
 	public void increaseKilled(final Player player, final LivingEntityType type) {
+		if (type == null) {
+			return;
+		}
 		YamlConfiguration conf = getKills(player);
 
-		String key;
-		switch (type.getAffection()) {
-		case AGGRESSIVE:
-			key = FragsInfoFlatFile.KILLED_BY.AGGRO;
-			break;
-		default:
-		case FRIENDLY:
-			key = FragsInfoFlatFile.KILLED_BY.FRIEND;
-			break;
-		case NEUTRAL:
-			key = FragsInfoFlatFile.KILLED_BY.NEUTRAL;
-			break;
-		case PVP:
-			key = FragsInfoFlatFile.KILLED_BY.PVP;
-			break;
-		}
-
+		String key = "killed." + type.toString();
 		conf.set(key, 1 + conf.getInt(key));
 		timeout.put(player, DIRTY_TICK);
 	}
 
 	@Override
 	public void increaseKills(final Player player, final LivingEntityType type) {
+		if (type == null) {
+			return;
+		}
 		YamlConfiguration conf = getKills(player);
 
-		String key;
-		switch (type.getAffection()) {
-		case AGGRESSIVE:
-			key = FragsInfoFlatFile.KILLED.AGGRO;
-			break;
-		default:
-		case FRIENDLY:
-			key = FragsInfoFlatFile.KILLED.FRIEND;
-			break;
-		case NEUTRAL:
-			key = FragsInfoFlatFile.KILLED.FRIEND;
-			break;
-		case PVP:
-			key = FragsInfoFlatFile.KILLED.PVP;
-			break;
-		}
-
+		String key = "kills." + type.toString();
 		conf.set(key, 1 + conf.getInt(key));
 		timeout.put(player, DIRTY_TICK);
 	}
 
-	/**
-	 * Get the file containing the inventory for the given player.
-	 * 
-	 * @param player
-	 *            Player in question
-	 * @return A <code>File</code> object.
-	 */
-	private File itemsFile(final Player player) {
-		return new File(itemFolder, player.getName().toLowerCase() + ".yml");
+	private YamlConfiguration loadInventoryFile(final Player player) {
+		File file = getInventoryFile(player);
+		return YamlConfiguration.loadConfiguration(file);
+	}
+
+	@Override
+	public boolean persistDeathLocation(final Player player) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -226,14 +218,13 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 		}
 
 		try {
-			File file = itemsFile(player);
-			YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
+			YamlConfiguration data = loadInventoryFile(player);
 			int counter = 1;
 			for (ItemStack item : items) {
 				data.set("item" + counter, item);
 				counter++;
 			}
-			data.save(file);
+			data.save(getInventoryFile(player));
 			return true;
 		} catch (IOException e) {
 			plugin.getLogger().log(Level.SEVERE,
@@ -244,9 +235,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public List<ItemStack> restoreItems(final Player player) {
-		File file = new File(itemFolder, player.getName().toLowerCase()
-				+ ".yml");
-		YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
+		YamlConfiguration data = loadInventoryFile(player);
 		plugin.getLogger().log(Level.INFO,
 				"Loading inventory for " + player.getName());
 		List<ItemStack> items = new LinkedList<ItemStack>();

@@ -1,8 +1,11 @@
 package li.cryx.minecraft.death.persist.flat;
 
 import li.cryx.minecraft.death.persist.FragsInfo;
+import li.cryx.minecraft.util.LivingEntityAffection;
+import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.LivingEntity;
 
 /**
  * Implementation of {@link FragsInfo} for {@link PersistenceFlatFile}.
@@ -11,20 +14,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class FragsInfoFlatFile implements FragsInfo {
 
-	static final class KILLED {
-		static final String AGGRO = "KilledAggro";
-		static final String FRIEND = "KilledFriend";
-		static final String NEUTRAL = "KilledNeutral";
-		static final String PVP = "KilledPvp";
-	}
-
-	static final class KILLED_BY {
-		static final String AGGRO = "KilledByAggro";
-		static final String FRIEND = "KilledByFriend";
-		static final String NEUTRAL = "KilledByNeutral";
-		static final String PVP = "KilledByPvp";
-	}
-
 	private final YamlConfiguration conf;
 
 	public FragsInfoFlatFile(final YamlConfiguration conf) {
@@ -32,43 +21,49 @@ public class FragsInfoFlatFile implements FragsInfo {
 	}
 
 	@Override
-	public int getAggroKillers() {
-		return conf.getInt(KILLED_BY.AGGRO);
+	public int getKillers(final LivingEntity entity) {
+		return getKillers(LivingEntityType.getType(entity));
 	}
 
 	@Override
-	public int getAggroKills() {
-		return conf.getInt(KILLED.AGGRO);
+	public int getKillers(final LivingEntityAffection affection) {
+		int sum = 0;
+		for (LivingEntityType type : LivingEntityType.getTypes(affection)) {
+			sum += getKillers(type);
+		}
+		return sum;
 	}
 
 	@Override
-	public int getFriendlyKillers() {
-		return conf.getInt(KILLED_BY.FRIEND);
+	public int getKillers(final LivingEntityType type) {
+		if (type == null) {
+			return 0;
+		} else {
+			return conf.getInt("killed." + type.toString());
+		}
 	}
 
 	@Override
-	public int getFriendlyKills() {
-		return conf.getInt(KILLED.FRIEND);
+	public int getKills(final LivingEntity entity) {
+		return getKills(LivingEntityType.getType(entity));
 	}
 
 	@Override
-	public int getNeutralKillers() {
-		return conf.getInt(KILLED_BY.NEUTRAL);
+	public int getKills(final LivingEntityAffection affection) {
+		int sum = 0;
+		for (LivingEntityType type : LivingEntityType.getTypes(affection)) {
+			sum += getKills(type);
+		}
+		return sum;
 	}
 
 	@Override
-	public int getNeutralKills() {
-		return conf.getInt(KILLED.NEUTRAL);
-	}
-
-	@Override
-	public int getPvpKillers() {
-		return conf.getInt(KILLED_BY.PVP);
-	}
-
-	@Override
-	public int getPvpKills() {
-		return conf.getInt(KILLED.PVP);
+	public int getKills(final LivingEntityType type) {
+		if (type == null) {
+			return 0;
+		} else {
+			return conf.getInt("kills." + type.toString());
+		}
 	}
 
 }

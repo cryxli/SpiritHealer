@@ -4,6 +4,7 @@ import java.util.List;
 
 import li.cryx.minecraft.util.LivingEntityType;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +31,10 @@ public abstract class AbstractPersistManager {
 	 */
 	public abstract void deleteItems(final Player player);
 
+	// TODO
+	public abstract Location getDeathLocation(final Player player);
+
+	// TODO
 	public abstract FragsInfo getFrags(Player player);
 
 	/**
@@ -57,6 +62,15 @@ public abstract class AbstractPersistManager {
 	 * @param type
 	 */
 	public abstract void increaseKills(Player player, LivingEntityType type);
+
+	/**
+	 * Store player's location (assuming s/he died there).
+	 * 
+	 * @param player
+	 *            Player in question.
+	 * @return <code>true</code> on success.
+	 */
+	public abstract boolean persistDeathLocation(final Player player);
 
 	/**
 	 * Store player's inventory.

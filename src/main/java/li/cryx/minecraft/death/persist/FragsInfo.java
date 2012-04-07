@@ -1,5 +1,10 @@
 package li.cryx.minecraft.death.persist;
 
+import li.cryx.minecraft.util.LivingEntityAffection;
+import li.cryx.minecraft.util.LivingEntityType;
+
+import org.bukkit.entity.LivingEntity;
+
 /**
  * This structure represents kills and deaths of a player.
  * 
@@ -7,31 +12,18 @@ package li.cryx.minecraft.death.persist;
  */
 public interface FragsInfo {
 
-	/** How often the player was killed by aggressive mobs. */
-	int getAggroKillers();
+	int getKillers(LivingEntity entity);
 
-	/** How many aggressive mobs the player killed. */
-	int getAggroKills();
+	/** How often the player was killed by mobs with the given affection. */
+	int getKillers(LivingEntityAffection affection);
 
-	/**
-	 * How often the player was killed by friendly mobs. ATM this will always be
-	 * <code>0</code>.
-	 */
-	int getFriendlyKillers();
+	int getKillers(LivingEntityType type);
 
-	/** How many friendly mobs the player killed. */
-	int getFriendlyKills();
+	int getKills(LivingEntity entity);
 
-	/** How often the player was killed by neutral mobs. */
-	int getNeutralKillers();
+	/** How many mobs with the given affection the player killed. */
+	int getKills(LivingEntityAffection affection);
 
-	/** How many neutral mobs the player killed. */
-	int getNeutralKills();
-
-	/** How often the player was killed by other players. */
-	int getPvpKillers();
-
-	/** How many other players the player killed. */
-	int getPvpKills();
+	int getKills(LivingEntityType type);
 
 }
