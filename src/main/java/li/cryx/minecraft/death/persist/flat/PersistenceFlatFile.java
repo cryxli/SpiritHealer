@@ -13,11 +13,9 @@ import li.cryx.minecraft.death.persist.FragsInfo;
 import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -202,20 +200,8 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public boolean persistItems(final Player player) {
-		PlayerInventory inv = player.getInventory();
 		// add inventory
-		List<ItemStack> items = new LinkedList<ItemStack>();
-		for (ItemStack item : inv.getContents()) {
-			if (item != null && item.getType() != Material.AIR) {
-				items.add(item);
-			}
-		}
-		// add worn armor to list
-		for (ItemStack item : inv.getArmorContents()) {
-			if (item != null && item.getType() != Material.AIR) {
-				items.add(item);
-			}
-		}
+		List<ItemStack> items = getAllItemsOfPlayer(player);
 
 		try {
 			YamlConfiguration data = loadInventoryFile(player);

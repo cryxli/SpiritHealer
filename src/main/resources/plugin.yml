@@ -1,6 +1,7 @@
 name: ${project.name}
 main: ${main.class}
 version: ${project.version}
+database: true
 description: >
              ${project.name} is a death/frag plugin for bukkit.
 

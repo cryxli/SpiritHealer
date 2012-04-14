@@ -1,12 +1,15 @@
 package li.cryx.minecraft.death.persist;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -30,6 +33,24 @@ public abstract class AbstractPersistManager {
 	 * @see #persistItems(Player)
 	 */
 	public abstract void deleteItems(final Player player);
+
+	protected List<ItemStack> getAllItemsOfPlayer(final Player player) {
+		PlayerInventory inv = player.getInventory();
+		// add inventory
+		List<ItemStack> items = new LinkedList<ItemStack>();
+		for (ItemStack item : inv.getContents()) {
+			if (item != null && item.getType() != Material.AIR) {
+				items.add(item);
+			}
+		}
+		// add worn armor to list
+		for (ItemStack item : inv.getArmorContents()) {
+			if (item != null && item.getType() != Material.AIR) {
+				items.add(item);
+			}
+		}
+		return items;
+	}
 
 	// TODO
 	public abstract Location getDeathLocation(final Player player);

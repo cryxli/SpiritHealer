@@ -91,6 +91,7 @@ public class DeathListener implements Listener {
 			player.sendMessage("The Spirit Healer cannot recover your items.");
 		}
 		plugin.getLogger().info(player.getName() + " died");
+		plugin.getPersist().persistDeathLocation(player);
 
 		// count frags
 		LivingEntity killer = findKiller(player.getLastDamageCause());
