@@ -22,6 +22,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.avaje.ebean.Query;
 
+/**
+ * Database implementation of a {@link AbstractPersistManager}. It uses bukkits
+ * database mechanisms.
+ * 
+ * @author cryxli
+ */
 public class PersistenceDatabase extends AbstractPersistManager {
 
 	private static Logger LOG = Logger.getLogger(PersistenceDatabase.class
@@ -46,6 +52,14 @@ public class PersistenceDatabase extends AbstractPersistManager {
 		}
 	}
 
+	/**
+	 * Get the death location of the given player
+	 * 
+	 * @param playerName
+	 *            A player by his/her name
+	 * @return A {@link DeathLocation}, or, <code>null</code> if none was
+	 *         stored.
+	 */
 	private DeathLocation getDeathLocation(final String playerName) {
 		Query<DeathLocation> query = plugin.getDatabase().find(
 				DeathLocation.class);
@@ -108,7 +122,7 @@ public class PersistenceDatabase extends AbstractPersistManager {
 	}
 
 	@Override
-	public void increaseKilled(final Player player, final LivingEntityType type) {
+	public void increaseDeaths(final Player player, final LivingEntityType type) {
 		Kills kill = getSingleKillEntry(player.getName(), type);
 		kill.increaseDeaths();
 		plugin.getDatabase().save(kill);

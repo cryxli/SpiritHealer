@@ -12,18 +12,52 @@ import org.bukkit.entity.LivingEntity;
  */
 public interface FragsInfo {
 
-	int getKillers(LivingEntity entity);
+	/**
+	 * How often the player was killed by mobs with the given entity.
+	 * 
+	 * @param entity
+	 *            Group deaths by <code>LivingEntity</code>
+	 */
+	int getDeaths(LivingEntity entity);
 
-	/** How often the player was killed by mobs with the given affection. */
-	int getKillers(LivingEntityAffection affection);
+	/**
+	 * How often the player was killed by mobs with the given affection.
+	 * 
+	 * @param affection
+	 *            Group the deaths by {@link LivingEntityAffection}
+	 */
+	int getDeaths(LivingEntityAffection affection);
 
-	int getKillers(LivingEntityType type);
+	/**
+	 * How often the player was killed by mobs with the given affection.
+	 * 
+	 * @param type
+	 *            Group deaths by {@link LivingEntityType}
+	 */
+	int getDeaths(LivingEntityType type);
 
+	/**
+	 * How many mobs of the given affection the player killed.
+	 * 
+	 * @param entity
+	 *            Group kills by <code>LivingEntity</code>
+	 */
 	int getKills(LivingEntity entity);
 
-	/** How many mobs with the given affection the player killed. */
+	/**
+	 * How many mobs of the given affection the player killed.
+	 * 
+	 * @param affection
+	 *            Group kills by {@link LivingEntityAffection}
+	 */
 	int getKills(LivingEntityAffection affection);
 
+	/**
+	 * How many mobs of the given affection the player killed.
+	 * 
+	 * @param type
+	 *            Group kills by {@link LivingEntityType}
+	 */
 	int getKills(LivingEntityType type);
 
 }

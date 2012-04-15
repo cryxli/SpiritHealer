@@ -18,6 +18,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Structure to store an item.
+ * 
+ * @author cryxli
+ */
 @Entity
 @Table(name = "sh_item")
 public class Item {

@@ -21,21 +21,21 @@ public class FragsInfoFlatFile implements FragsInfo {
 	}
 
 	@Override
-	public int getKillers(final LivingEntity entity) {
-		return getKillers(LivingEntityType.getType(entity));
+	public int getDeaths(final LivingEntity entity) {
+		return getDeaths(LivingEntityType.getType(entity));
 	}
 
 	@Override
-	public int getKillers(final LivingEntityAffection affection) {
+	public int getDeaths(final LivingEntityAffection affection) {
 		int sum = 0;
 		for (LivingEntityType type : LivingEntityType.getTypes(affection)) {
-			sum += getKillers(type);
+			sum += getDeaths(type);
 		}
 		return sum;
 	}
 
 	@Override
-	public int getKillers(final LivingEntityType type) {
+	public int getDeaths(final LivingEntityType type) {
 		if (type == null) {
 			return 0;
 		} else {

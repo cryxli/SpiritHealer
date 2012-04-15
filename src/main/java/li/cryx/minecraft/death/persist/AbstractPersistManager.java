@@ -73,7 +73,7 @@ public abstract class AbstractPersistManager {
 	 * @param player
 	 * @param type
 	 */
-	public abstract void increaseKilled(Player player, LivingEntityType type);
+	public abstract void increaseDeaths(Player player, LivingEntityType type);
 
 	/**
 	 * Increase the amount of entities of the given type the given player

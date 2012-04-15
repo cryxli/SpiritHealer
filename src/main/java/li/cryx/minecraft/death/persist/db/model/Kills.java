@@ -9,6 +9,11 @@ import javax.persistence.Table;
 
 import li.cryx.minecraft.util.LivingEntityType;
 
+/**
+ * Structure to store kills and deaths of a player and {@link LivingEntityType}.
+ * 
+ * @author cryxli
+ */
 @Entity
 @Table(name = "sh_kills")
 public class Kills {

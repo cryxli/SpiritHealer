@@ -7,6 +7,11 @@ import javax.persistence.Table;
 
 import org.bukkit.enchantments.Enchantment;
 
+/**
+ * Structure to describe an enchantment of an item.
+ * 
+ * @author cryxli
+ */
 @Entity
 @Table(name = "sh_enchant")
 public class Enchant {

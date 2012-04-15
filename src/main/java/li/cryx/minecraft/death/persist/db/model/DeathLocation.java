@@ -10,6 +10,11 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+/**
+ * Structure to store a death location.
+ * 
+ * @author cryxli
+ */
 @Entity
 @Table(name = "sh_death_location")
 public class DeathLocation {

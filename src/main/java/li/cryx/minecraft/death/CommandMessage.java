@@ -14,7 +14,7 @@ public enum CommandMessage {
 		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
 		boolean kills = false;
 		for (LivingEntityType t : LivingEntityType.values()) {
-			if (info.getKillers(t) > 0 || info.getKills(t) > 0) {
+			if (info.getDeaths(t) > 0 || info.getKills(t) > 0) {
 				StringBuffer buf = new StringBuffer();
 				buf.append(ChatColor.YELLOW);
 				buf.append(t.toString());
@@ -24,7 +24,7 @@ public enum CommandMessage {
 				buf.append(ChatColor.YELLOW);
 				buf.append("/");
 				buf.append(ChatColor.RED);
-				buf.append(info.getKillers(t));
+				buf.append(info.getDeaths(t));
 				sender.sendMessage(buf.toString());
 				kills = true;
 			}
@@ -70,7 +70,7 @@ public enum CommandMessage {
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getKillers(LivingEntityAffection.PVP));
+		buf.append(info.getDeaths(LivingEntityAffection.PVP));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
@@ -81,7 +81,7 @@ public enum CommandMessage {
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getKillers(LivingEntityAffection.AGGRESSIVE));
+		buf.append(info.getDeaths(LivingEntityAffection.AGGRESSIVE));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
@@ -92,7 +92,7 @@ public enum CommandMessage {
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getKillers(LivingEntityAffection.NEUTRAL));
+		buf.append(info.getDeaths(LivingEntityAffection.NEUTRAL));
 		sender.sendMessage(buf.toString());
 
 		buf = new StringBuffer();
@@ -103,20 +103,20 @@ public enum CommandMessage {
 		buf.append(ChatColor.YELLOW);
 		buf.append("/");
 		buf.append(ChatColor.RED);
-		buf.append(info.getKillers(LivingEntityAffection.FRIENDLY));
+		buf.append(info.getDeaths(LivingEntityAffection.FRIENDLY));
 		sender.sendMessage(buf.toString());
 	}
 
 	/** Send the minimalistic list of kills and deaths to the player. */
 	private void sendMinimal(final CommandSender sender, final FragsInfo info) {
 		int pvp = info.getKills(LivingEntityAffection.PVP)
-				- info.getKillers(LivingEntityAffection.PVP);
+				- info.getDeaths(LivingEntityAffection.PVP);
 		int aggro = info.getKills(LivingEntityAffection.AGGRESSIVE)
-				- info.getKillers(LivingEntityAffection.AGGRESSIVE);
+				- info.getDeaths(LivingEntityAffection.AGGRESSIVE);
 		int neutral = info.getKills(LivingEntityAffection.NEUTRAL)
-				- info.getKillers(LivingEntityAffection.NEUTRAL);
+				- info.getDeaths(LivingEntityAffection.NEUTRAL);
 		int friend = info.getKills(LivingEntityAffection.FRIENDLY)
-				- info.getKillers(LivingEntityAffection.FRIENDLY);
+				- info.getDeaths(LivingEntityAffection.FRIENDLY);
 
 		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
 

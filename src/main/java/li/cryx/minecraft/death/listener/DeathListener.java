@@ -96,7 +96,7 @@ public class DeathListener implements Listener {
 		// count frags
 		LivingEntity killer = findKiller(player.getLastDamageCause());
 		if (killer != null) {
-			plugin.getPersist().increaseKilled(player,
+			plugin.getPersist().increaseDeaths(player,
 					LivingEntityType.getType(killer));
 		}
 	}

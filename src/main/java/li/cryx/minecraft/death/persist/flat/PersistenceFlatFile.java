@@ -10,9 +10,11 @@ import java.util.logging.Level;
 
 import li.cryx.minecraft.death.persist.AbstractPersistManager;
 import li.cryx.minecraft.death.persist.FragsInfo;
+import li.cryx.minecraft.util.DummyPlayer;
 import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,6 +45,12 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	private static final int DIRTY_TICK = 0;
 
 	private static final int NOT_DIRTY_TICK = 1;
+
+	/**
+	 * Trick to have death locations stored like player kills/deaths
+	 */
+	private static final Player DEATH_LOC_PLAYER = new DummyPlayer(
+			"DeathLocationPlayer");
 
 	private boolean autoSave = false;
 
@@ -127,8 +135,17 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public Location getDeathLocation(final Player player) {
-		// TODO Auto-generated method stub
-		return player.getWorld().getSpawnLocation().clone();
+		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
+
+		World world = player.getServer().getWorld(
+				yml.getString(player.getName() + ".world"));
+		if (world == null) {
+			return player.getLocation().clone();
+		}
+		double x = yml.getDouble(player.getName() + ".x");
+		double y = yml.getDouble(player.getName() + ".y");
+		double z = yml.getDouble(player.getName() + ".z");
+		return new Location(world, x, y, z);
 	}
 
 	@Override
@@ -164,7 +181,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	}
 
 	@Override
-	public void increaseKilled(final Player player, final LivingEntityType type) {
+	public void increaseDeaths(final Player player, final LivingEntityType type) {
 		if (type == null) {
 			return;
 		}
@@ -194,8 +211,16 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 
 	@Override
 	public boolean persistDeathLocation(final Player player) {
-		// TODO Auto-generated method stub
-		return false;
+		Location loc = player.getLocation();
+		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
+
+		yml.set(player.getName() + ".world", player.getWorld().getName());
+		yml.set(player.getName() + ".x", loc.getX());
+		yml.set(player.getName() + ".y", loc.getY());
+		yml.set(player.getName() + ".z", loc.getZ());
+
+		timeout.put(DEATH_LOC_PLAYER, DIRTY_TICK);
+		return true;
 	}
 
 	@Override
