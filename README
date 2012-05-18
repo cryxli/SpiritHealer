@@ -1,7 +1,7 @@
 SpiritHealer
 ============
 
-This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's r1.2.4-R1.0 release. 
+This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's r1.2.5-R2.0 release.
 
 
 Description
@@ -36,6 +36,7 @@ Use
 ---
 
 - In game type "/frags" to see your current death/kill count
+- "/frags d" to see detailed info by creature type
 - After you died, visit a spirit altar to get your items back (Touch it with your bare hands.)
 - The altar will punish you, if you touch it with anything but your bare hands
 - If you die on the way to the altar, your inventory is lost. (Only one inventory is stored per player.)
