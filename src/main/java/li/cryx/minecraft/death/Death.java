@@ -206,11 +206,12 @@ public class Death extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		persist.shutdown();
-		persist = null;
+		playerListener = null;
 		blockListener = null;
 		altarListener = null;
 		altars.clear();
+		persist.shutdown();
+		persist = null;
 
 		// TODO Auto-generated method stub
 

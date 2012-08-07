@@ -137,15 +137,20 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	public Location getDeathLocation(final Player player) {
 		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
 
+		String name = player.getName();
 		World world = player.getServer().getWorld(
-				yml.getString(player.getName() + ".world"));
+				yml.getString(name + ".world"));
 		if (world == null) {
-			return player.getLocation().clone();
+			return null;
 		}
-		double x = yml.getDouble(player.getName() + ".x");
-		double y = yml.getDouble(player.getName() + ".y");
-		double z = yml.getDouble(player.getName() + ".z");
-		return new Location(world, x, y, z);
+		double x = yml.getDouble(name + ".x", Double.NaN);
+		double y = yml.getDouble(name + ".y", Double.NaN);
+		double z = yml.getDouble(name + ".z", Double.NaN);
+		if (x == Double.NaN || y == Double.NaN || z == Double.NaN) {
+			return null;
+		} else {
+			return new Location(world, x, y, z);
+		}
 	}
 
 	@Override
@@ -214,10 +219,11 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 		Location loc = player.getLocation();
 		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
 
-		yml.set(player.getName() + ".world", player.getWorld().getName());
-		yml.set(player.getName() + ".x", loc.getX());
-		yml.set(player.getName() + ".y", loc.getY());
-		yml.set(player.getName() + ".z", loc.getZ());
+		String name = player.getName();
+		yml.set(name + ".world", player.getWorld().getName());
+		yml.set(name + ".x", loc.getX());
+		yml.set(name + ".y", loc.getY());
+		yml.set(name + ".z", loc.getZ());
 
 		timeout.put(DEATH_LOC_PLAYER, DIRTY_TICK);
 		return true;

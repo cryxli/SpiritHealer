@@ -1,5 +1,5 @@
 
-# how to store inventories - ignored ATM
+# how to store inventories - FlatFile or Bukkit
 Database: FlatFile
 
 # msg when player does not have items to recover

@@ -192,6 +192,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public int getExpToLevel() {
+		return 0;
+	}
+
+	@Override
 	public double getEyeHeight() {
 		return 0;
 	}
@@ -435,6 +440,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public boolean hasLineOfSight(final Entity other) {
+		return false;
+	}
+
+	@Override
 	public boolean hasMetadata(final String metadataKey) {
 		return false;
 	}
@@ -559,6 +569,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public boolean isSprinting() {
 		return false;
+	}
+
+	@Override
+	public boolean isValid() {
+		return true;
 	}
 
 	@Override
