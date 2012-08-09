@@ -17,7 +17,8 @@ Warn2: You still don't want to listen?
 # last warning, third punishment; kick player
 Warn3: You annoyed the Spirit Healer.
 
-# how to display frags, values: MIN or FULL
+# how to display frags, values: Full, Detailed or Minimal 
+# (only the first character matters)
 FragsDisplay: min
 
 # describe of what materials an altar is formed

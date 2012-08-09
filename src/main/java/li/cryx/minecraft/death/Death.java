@@ -210,7 +210,9 @@ public class Death extends JavaPlugin {
 		blockListener = null;
 		altarListener = null;
 		altars.clear();
-		persist.shutdown();
+		if (persist != null) {
+			persist.shutdown();
+		}
 		persist = null;
 
 		// TODO Auto-generated method stub

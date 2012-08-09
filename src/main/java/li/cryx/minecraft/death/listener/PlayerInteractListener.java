@@ -58,7 +58,7 @@ public class PlayerInteractListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBlockHit(final PlayerInteractEvent event) {
 		Block block = event.getClickedBlock();
-		if (block == null || block.getType() != Material.ENDER_STONE) {
+		if (block == null || block.getType() != plugin.getAltarMaterial()) {
 			return;
 		} else if (block.getWorld().getWorldType() != WorldType.NORMAL) {
 			return;
