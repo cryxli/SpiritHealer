@@ -86,8 +86,6 @@ public class Death extends JavaPlugin {
 		blockListener = new BlockListener(this);
 		altarListener = new PlayerInteractListener(this);
 
-		// TODO Auto-generated method stub
-
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(playerListener, this);
 		pm.registerEvents(blockListener, this);
@@ -214,8 +212,6 @@ public class Death extends JavaPlugin {
 			persist.shutdown();
 		}
 		persist = null;
-
-		// TODO Auto-generated method stub
 
 		getLogger().info(getDescription().getFullName() + " disabled");
 	}

@@ -227,6 +227,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public float getFlySpeed() {
+		return 0;
+	}
+
+	@Override
 	public int getFoodLevel() {
 		return 0;
 	}
@@ -428,6 +433,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public Vector getVelocity() {
 		return null;
+	}
+
+	@Override
+	public float getWalkSpeed() {
+		return 0;
 	}
 
 	@Override
@@ -763,6 +773,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void setFlySpeed(final float speed) throws IllegalArgumentException {
+	}
+
+	@Override
 	public void setFoodLevel(final int value) {
 	}
 
@@ -858,6 +872,10 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setVelocity(final Vector velocity) {
+	}
+
+	@Override
+	public void setWalkSpeed(final float speed) throws IllegalArgumentException {
 	}
 
 	@Override
