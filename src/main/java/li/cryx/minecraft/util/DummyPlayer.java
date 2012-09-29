@@ -17,6 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Server;
+import org.bukkit.Sound;
 import org.bukkit.Statistic;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -173,6 +174,11 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public Set<PermissionAttachmentInfo> getEffectivePermissions() {
+		return null;
+	}
+
+	@Override
+	public Inventory getEnderChest() {
 		return null;
 	}
 
@@ -659,6 +665,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public void playNote(final Location loc, final Instrument instrument,
 			final Note note) {
+	}
+
+	@Override
+	public void playSound(Location location, Sound sound, float volume,
+			float pitch) {
 	}
 
 	@Override
