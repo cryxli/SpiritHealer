@@ -8,3 +8,22 @@ description: >
 commands:
   frags:
     description: Returns information about how many entites a player killed.
+
+permissions:
+  spirithealer.*:
+    default: op
+    description: Player has all effects of the plugin.
+    children:
+      spirithealer.altar: true
+      spirithealer.inventory: true
+      spirithealer.frags: true
+  spirithealer.inventory:
+    default: true
+    description: Inventory is saved on death.
+  spirithealer.frags:
+    default: true
+    description: Plugin counts deaths and kills.
+  spirithealer.altar:
+    default: op
+    description: Players can build spirit altars.
+    

@@ -19,6 +19,7 @@ import li.cryx.minecraft.death.persist.db.model.Enchant;
 import li.cryx.minecraft.death.persist.db.model.Item;
 import li.cryx.minecraft.death.persist.db.model.Kills;
 import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
+import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -63,8 +64,6 @@ public class Death extends JavaPlugin {
 	 * @param location
 	 */
 	public void addAltarLocation(final Location location) {
-		System.out.println(location);
-
 		if (location != null && !isAltar(location)) {
 			altars.add(location);
 
@@ -188,7 +187,8 @@ public class Death extends JavaPlugin {
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command,
 			final String label, final String[] args) {
-		if (sender instanceof Player) {
+		if ((sender instanceof Player) //
+				&& PermNode.FRAGS.hasPermission(sender)) {
 			FragsInfo info = getPersist().getFrags((Player) sender);
 			CommandMessage.INSTANCE.sendFragsAnswer( //
 					sender, //

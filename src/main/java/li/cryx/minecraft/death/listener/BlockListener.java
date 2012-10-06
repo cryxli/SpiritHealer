@@ -1,6 +1,7 @@
 package li.cryx.minecraft.death.listener;
 
 import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.WorldType;
 import org.bukkit.block.Block;
@@ -33,6 +34,10 @@ public class BlockListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onBlockPlace(final BlockPlaceEvent event) {
+		if (!PermNode.ALTAR.hasPermission(event.getPlayer())) {
+			return;
+		}
+
 		Block block = event.getBlockPlaced();
 		if (block.getWorld().getWorldType() != WorldType.NORMAL) {
 			return;

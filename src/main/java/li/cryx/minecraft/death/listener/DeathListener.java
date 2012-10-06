@@ -2,6 +2,7 @@ package li.cryx.minecraft.death.listener;
 
 import li.cryx.minecraft.death.Death;
 import li.cryx.minecraft.util.LivingEntityType;
+import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -68,8 +69,11 @@ public class DeathListener implements Listener {
 		LivingEntity killer = findKiller(entity.getLastDamageCause());
 		if (killer != null && killer instanceof Player) {
 			Player player = (Player) killer;
-			plugin.getPersist().increaseKills(player, type);
-			plugin.getLogger().fine(type + " killed by " + player.getName());
+			if (PermNode.FRAGS.hasPermission(player)) {
+				plugin.getPersist().increaseKills(player, type);
+				plugin.getLogger()
+						.fine(type + " killed by " + player.getName());
+			}
 		}
 	}
 
@@ -81,23 +85,28 @@ public class DeathListener implements Listener {
 	 */
 	private void processPlayerDeath(final PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		// persisting player's items
-		boolean success = plugin.getPersist().persistItems(player);
 
-		if (success) {
-			// prevent item drops
-			event.getDrops().clear();
-		} else {
-			player.sendMessage("The Spirit Healer cannot recover your items.");
+		if (PermNode.INVENTORY.hasPermission(player)) {
+			// persisting player's items
+			boolean success = plugin.getPersist().persistItems(player);
+
+			if (success) {
+				// prevent item drops
+				event.getDrops().clear();
+			} else {
+				player.sendMessage("The Spirit Healer cannot recover your items.");
+			}
+			plugin.getLogger().info(player.getName() + " died");
+			plugin.getPersist().persistDeathLocation(player);
 		}
-		plugin.getLogger().info(player.getName() + " died");
-		plugin.getPersist().persistDeathLocation(player);
 
-		// count frags
-		LivingEntity killer = findKiller(player.getLastDamageCause());
-		if (killer != null) {
-			plugin.getPersist().increaseDeaths(player,
-					LivingEntityType.getType(killer));
+		if (PermNode.FRAGS.hasPermission(player)) {
+			// count frags
+			LivingEntity killer = findKiller(player.getLastDamageCause());
+			if (killer != null) {
+				plugin.getPersist().increaseDeaths(player,
+						LivingEntityType.getType(killer));
+			}
 		}
 	}
 

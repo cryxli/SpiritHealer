@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.Material;
 import org.bukkit.WorldType;
@@ -67,6 +68,10 @@ public class PlayerInteractListener implements Listener {
 		}
 
 		Player player = event.getPlayer();
+		if (!PermNode.INVENTORY.hasPermission(player)) {
+			return;
+		}
+
 		ItemStack item = player.getItemInHand();
 		if (item == null || item.getType() == Material.AIR) {
 			warnings.remove(player);
