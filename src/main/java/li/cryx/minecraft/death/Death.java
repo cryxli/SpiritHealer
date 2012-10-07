@@ -114,16 +114,7 @@ public class Death extends JavaPlugin {
 	}
 
 	public boolean isAltar(final Location location) {
-		if (location == null) {
-			return false;
-		}
-
-		for (Location loc : altars) {
-			if (loc.equals(location)) {
-				return true;
-			}
-		}
-		return false;
+		return altars.contains(location);
 	}
 
 	/**
@@ -207,6 +198,7 @@ public class Death extends JavaPlugin {
 		playerListener = null;
 		blockListener = null;
 		altarListener = null;
+
 		altars.clear();
 		if (persist != null) {
 			persist.shutdown();
