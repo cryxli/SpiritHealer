@@ -36,11 +36,11 @@ public enum LivingEntityType {
 	WOLF(EntityType.WOLF, LivingEntityAffection.NEUTRAL), //
 	OCELOT(EntityType.OCELOT, LivingEntityAffection.NEUTRAL), //
 	SNOWMAN(EntityType.SNOWMAN, LivingEntityAffection.FRIENDLY), //
-	IRON_GOLEM(EntityType.IRON_GOLEM, LivingEntityAffection.NEUTRAL);
-
-	// new in weeklies
-	// WITCH(LivingEntityAffection.AGGRESSIVE)
-	// BAT(LivingEntityAffection.NEUTRAL)
+	IRON_GOLEM(EntityType.IRON_GOLEM, LivingEntityAffection.NEUTRAL), //
+	WITHER(EntityType.WITHER, LivingEntityAffection.AGGRESSIVE), //
+	// WITHER_SKELETON(???, LivingEntityAffection.AGGRESSIVE), //
+	WITCH(EntityType.WITCH, LivingEntityAffection.AGGRESSIVE), //
+	BAT(EntityType.BAT, LivingEntityAffection.NEUTRAL);
 
 	/**
 	 * Get the type of the given entity instance.
@@ -94,7 +94,7 @@ public enum LivingEntityType {
 	/** How the create acts when it meets a player. */
 	private final LivingEntityAffection affection;
 
-	private LivingEntityType(EntityType type,
+	private LivingEntityType(final EntityType type,
 			final LivingEntityAffection affection) {
 		this.type = type;
 		this.affection = affection;

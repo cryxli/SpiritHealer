@@ -14,7 +14,7 @@ public class LivingEntityTypeTest {
 	@Test
 	public void getType() {
 		// make the test fail when LivingEntityType is changed.
-		Assert.assertEquals(25, LivingEntityType.values().length);
+		Assert.assertEquals(28, LivingEntityType.values().length);
 
 		// read test starts here
 		Assert.assertEquals(LivingEntityType.PLAYER,
@@ -67,5 +67,11 @@ public class LivingEntityTypeTest {
 				LivingEntityType.getType(EntityType.SNOWMAN));
 		Assert.assertEquals(LivingEntityType.IRON_GOLEM,
 				LivingEntityType.getType(EntityType.IRON_GOLEM));
+		Assert.assertEquals(LivingEntityType.WITHER,
+				LivingEntityType.getType(EntityType.WITHER));
+		Assert.assertEquals(LivingEntityType.WITCH,
+				LivingEntityType.getType(EntityType.WITCH));
+		Assert.assertEquals(LivingEntityType.BAT,
+				LivingEntityType.getType(EntityType.BAT));
 	}
 }

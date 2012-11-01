@@ -456,6 +456,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void giveExpLevels(final int amount) {
+	}
+
+	@Override
 	public boolean hasLineOfSight(final Entity other) {
 		return false;
 	}
@@ -668,8 +672,8 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public void playSound(Location location, Sound sound, float volume,
-			float pitch) {
+	public void playSound(final Location location, final Sound sound,
+			final float volume, final float pitch) {
 	}
 
 	@Override
@@ -753,6 +757,10 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setBedSpawnLocation(final Location location) {
+	}
+
+	@Override
+	public void setBedSpawnLocation(final Location location, final boolean force) {
 	}
 
 	@Override
