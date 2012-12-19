@@ -1,3 +1,32 @@
+/*
+ * Copyright (c) 2011 Urs P. Stettler, httpimport java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
+
+import li.cryx.minecraft.death.persist.AbstractPersistManager;
+import li.cryx.minecraft.death.persist.FragsInfo;
+import li.cryx.minecraft.death.persist.db.model.DeathLocation;
+import li.cryx.minecraft.death.persist.db.model.Item;
+import li.cryx.minecraft.death.persist.db.model.Kills;
+import li.cryx.minecraft.util.LivingEntityType;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.avaje.ebean.Query;
+IMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package li.cryx.minecraft.death.persist.db;
 
 import java.util.LinkedList;
