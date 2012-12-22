@@ -933,6 +933,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void setTexturePack(final String url) {
+	}
+
+	@Override
 	public void setTicksLived(final int value) {
 	}
 
