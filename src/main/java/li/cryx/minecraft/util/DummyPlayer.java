@@ -741,6 +741,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void resetMaxHealth() {
+	}
+
+	@Override
 	public void resetPlayerTime() {
 	}
 
@@ -872,6 +876,10 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setLevel(final int level) {
+	}
+
+	@Override
+	public void setMaxHealth(final int health) {
 	}
 
 	@Override

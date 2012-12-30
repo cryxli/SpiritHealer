@@ -105,8 +105,9 @@ public class Item {
 	}
 
 	public ItemStack getItemStack() {
-		ItemStack item = new ItemStack(material, amount, durability, data);
-		// TODO enchantment
+		ItemStack item = new ItemStack(material, amount, data);
+		item.setDurability(durability);
+		// enchantment
 		for (Enchant e : getEnchantments()) {
 			item.addEnchantment(e.getEnchantment(), e.getLevel());
 		}
