@@ -76,7 +76,7 @@ public class DeathListener implements Listener {
 	 * @param event
 	 *            Events that may also contain player deaths.
 	 */
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onNpcDeath(final EntityDeathEvent event) {
 		if (event instanceof PlayerDeathEvent) {
 			processPlayerDeath((PlayerDeathEvent) event);
