@@ -41,6 +41,7 @@ import org.bukkit.Note;
 import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
+import org.bukkit.WeatherType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.conversations.Conversation;
@@ -192,6 +193,11 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public Location getCompassTarget() {
+		return null;
+	}
+
+	@Override
+	public String getCustomName() {
 		return null;
 	}
 
@@ -424,6 +430,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public WeatherType getPlayerWeather() {
+		return null;
+	}
+
+	@Override
 	public int getRemainingAir() {
 		return 0;
 	}
@@ -570,6 +581,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public boolean isCustomNameVisible() {
+		return false;
+	}
+
+	@Override
 	public boolean isDead() {
 		return false;
 	}
@@ -586,6 +602,11 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public boolean isInsideVehicle() {
+		return false;
+	}
+
+	@Override
+	public boolean isOnGround() {
 		return false;
 	}
 
@@ -749,6 +770,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void resetPlayerWeather() {
+	}
+
+	@Override
 	public void saveData() {
 	}
 
@@ -816,6 +841,14 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setCompassTarget(final Location loc) {
+	}
+
+	@Override
+	public void setCustomName(final String name) {
+	}
+
+	@Override
+	public void setCustomNameVisible(final boolean flag) {
 	}
 
 	@Override
@@ -914,6 +947,10 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setPlayerTime(final long time, final boolean relative) {
+	}
+
+	@Override
+	public void setPlayerWeather(final WeatherType type) {
 	}
 
 	@Override
