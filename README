@@ -1,13 +1,16 @@
 SpiritHealer
 ============
 
-This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to bukkit's r1.4.7-R1.0 release.
+This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to 
+bukkit's r1.5.2-R1.0 release.
 
 
 Description
 -----------
 
-Similar to the Spirit Healer of WoW this plugin prevents item drops on player death. After respawn the players can visit a Spirit Altar to get their items back. Players can only get their own items not items of other players.
+Similar to the Spirit Healer of WoW this plugin prevents item drops on player death. After respawn the 
+players can visit a Spirit Altar to get their items back. Players can only get their own items not items 
+of other players.
 
 The plugin also keeps track of whatever players kill. There are four categories:
 - PvP (Player vs. player kills)
