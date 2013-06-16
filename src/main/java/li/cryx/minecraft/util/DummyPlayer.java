@@ -69,6 +69,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 public class DummyPlayer implements Player {
@@ -447,6 +448,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public float getSaturation() {
 		return 0;
+	}
+
+	@Override
+	public Scoreboard getScoreboard() {
+		return null;
 	}
 
 	@Override
@@ -963,6 +969,11 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setSaturation(final float value) {
+	}
+
+	@Override
+	public void setScoreboard(final Scoreboard scoreboard)
+			throws IllegalArgumentException, IllegalStateException {
 	}
 
 	@Override
