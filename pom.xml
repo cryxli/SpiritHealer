@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.5.2-R1.0</version>
+			<version>1.6.2-R1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -41,6 +41,17 @@
 			<id>bukkit</id>
 			<name>bukkit</name>
 			<url>http://repo.bukkit.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>bukkit-snapshots</id>
+			<name>bukkit</name>
+			<url>http://repo.bukkit.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 

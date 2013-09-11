@@ -81,6 +81,41 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void _INVALID_damage(final int amount) {
+	}
+
+	@Override
+	public void _INVALID_damage(final int amount, final Entity source) {
+	}
+
+	@Override
+	public int _INVALID_getHealth() {
+		return 0;
+	}
+
+	@Override
+	public int _INVALID_getLastDamage() {
+		return 0;
+	}
+
+	@Override
+	public int _INVALID_getMaxHealth() {
+		return 0;
+	}
+
+	@Override
+	public void _INVALID_setHealth(final int health) {
+	}
+
+	@Override
+	public void _INVALID_setLastDamage(final int damage) {
+	}
+
+	@Override
+	public void _INVALID_setMaxHealth(final int health) {
+	}
+
+	@Override
 	public void abandonConversation(final Conversation conversation) {
 	}
 
@@ -155,11 +190,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public void damage(final int amount) {
+	public void damage(final double amount) {
 	}
 
 	@Override
-	public void damage(final int amount, final Entity source) {
+	public void damage(final double amount, final Entity source) {
 	}
 
 	@Override
@@ -288,7 +323,12 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public int getHealth() {
+	public double getHealth() {
+		return 20;
+	}
+
+	@Override
+	public double getHealthScale() {
 		return 0;
 	}
 
@@ -313,7 +353,7 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public int getLastDamage() {
+	public double getLastDamage() {
 		return 0;
 	}
 
@@ -330,6 +370,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public List<Block> getLastTwoTargetBlocks(final HashSet<Byte> transparent,
 			final int maxDistance) {
+		return null;
+	}
+
+	@Override
+	public Entity getLeashHolder() throws IllegalStateException {
 		return null;
 	}
 
@@ -365,7 +410,7 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public int getMaxHealth() {
+	public double getMaxHealth() {
 		return 20;
 	}
 
@@ -607,7 +652,17 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public boolean isHealthScaled() {
+		return false;
+	}
+
+	@Override
 	public boolean isInsideVehicle() {
+		return false;
+	}
+
+	@Override
+	public boolean isLeashed() {
 		return false;
 	}
 
@@ -744,6 +799,11 @@ public class DummyPlayer implements Player {
 	@Override
 	public void playSound(final Location location, final Sound sound,
 			final float volume, final float pitch) {
+	}
+
+	@Override
+	public void playSound(final Location arg0, final String arg1,
+			final float arg2, final float arg3) {
 	}
 
 	@Override
@@ -894,7 +954,16 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public void setHealth(final int health) {
+	public void setHealth(final double health) {
+	}
+
+	@Override
+	public void setHealthScale(final double arg0)
+			throws IllegalArgumentException {
+	}
+
+	@Override
+	public void setHealthScaled(final boolean arg0) {
 	}
 
 	@Override
@@ -906,7 +975,7 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
-	public void setLastDamage(final int damage) {
+	public void setLastDamage(final double damage) {
 	}
 
 	@Override
@@ -914,11 +983,16 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public boolean setLeashHolder(final Entity holder) {
+		return false;
+	}
+
+	@Override
 	public void setLevel(final int level) {
 	}
 
 	@Override
-	public void setMaxHealth(final int health) {
+	public void setMaxHealth(final double health) {
 	}
 
 	@Override

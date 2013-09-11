@@ -34,35 +34,36 @@ import org.bukkit.entity.LivingEntity;
  * @author cryxli
  */
 public enum LivingEntityType {
-	PLAYER(EntityType.PLAYER, LivingEntityAffection.PVP), //
-	SKELETON(EntityType.SKELETON, LivingEntityAffection.AGGRESSIVE), //
-	CREEPER(EntityType.CREEPER, LivingEntityAffection.AGGRESSIVE), //
-	CAVE_SPIDER(EntityType.CAVE_SPIDER, LivingEntityAffection.AGGRESSIVE), //
-	SPIDER(EntityType.SPIDER, LivingEntityAffection.AGGRESSIVE), //
-	ENDERMAN(EntityType.ENDERMAN, LivingEntityAffection.NEUTRAL), //
-	ENDER_DRAGON(EntityType.ENDER_DRAGON, LivingEntityAffection.AGGRESSIVE), //
+	BAT(EntityType.BAT, LivingEntityAffection.NEUTRAL), //
 	BLAZE(EntityType.BLAZE, LivingEntityAffection.AGGRESSIVE), //
-	PIG_ZOMBIE(EntityType.PIG_ZOMBIE, LivingEntityAffection.NEUTRAL), //
-	ZOMBIE(EntityType.ZOMBIE, LivingEntityAffection.AGGRESSIVE), //
-	SILVERFISH(EntityType.SILVERFISH, LivingEntityAffection.AGGRESSIVE), //
-	VILLAGER(EntityType.VILLAGER, LivingEntityAffection.FRIENDLY), //
-	SQUID(EntityType.SQUID, LivingEntityAffection.FRIENDLY), //
+	CAVE_SPIDER(EntityType.CAVE_SPIDER, LivingEntityAffection.AGGRESSIVE), //
+	CHICKEN(EntityType.CHICKEN, LivingEntityAffection.FRIENDLY), //
+	COW(EntityType.COW, LivingEntityAffection.FRIENDLY), //
+	CREEPER(EntityType.CREEPER, LivingEntityAffection.AGGRESSIVE), //
+	ENDER_DRAGON(EntityType.ENDER_DRAGON, LivingEntityAffection.AGGRESSIVE), //
+	ENDERMAN(EntityType.ENDERMAN, LivingEntityAffection.NEUTRAL), //
 	GHAST(EntityType.GHAST, LivingEntityAffection.AGGRESSIVE), //
-	SLIME(EntityType.SLIME, LivingEntityAffection.AGGRESSIVE), //
+	HORSE(EntityType.HORSE, LivingEntityAffection.FRIENDLY), //
+	IRON_GOLEM(EntityType.IRON_GOLEM, LivingEntityAffection.NEUTRAL), //
 	MAGMA_CUBE(EntityType.MAGMA_CUBE, LivingEntityAffection.AGGRESSIVE), //
 	MUSHROOM_COW(EntityType.MUSHROOM_COW, LivingEntityAffection.FRIENDLY), //
-	COW(EntityType.COW, LivingEntityAffection.FRIENDLY), //
-	CHICKEN(EntityType.CHICKEN, LivingEntityAffection.FRIENDLY), //
-	SHEEP(EntityType.SHEEP, LivingEntityAffection.FRIENDLY), //
-	PIG(EntityType.PIG, LivingEntityAffection.FRIENDLY), //
-	WOLF(EntityType.WOLF, LivingEntityAffection.NEUTRAL), //
 	OCELOT(EntityType.OCELOT, LivingEntityAffection.NEUTRAL), //
+	PIG(EntityType.PIG, LivingEntityAffection.FRIENDLY), //
+	PIG_ZOMBIE(EntityType.PIG_ZOMBIE, LivingEntityAffection.NEUTRAL), //
+	PLAYER(EntityType.PLAYER, LivingEntityAffection.PVP), //
+	SHEEP(EntityType.SHEEP, LivingEntityAffection.FRIENDLY), //
+	SILVERFISH(EntityType.SILVERFISH, LivingEntityAffection.AGGRESSIVE), //
+	SKELETON(EntityType.SKELETON, LivingEntityAffection.AGGRESSIVE), //
+	SLIME(EntityType.SLIME, LivingEntityAffection.AGGRESSIVE), //
 	SNOWMAN(EntityType.SNOWMAN, LivingEntityAffection.FRIENDLY), //
-	IRON_GOLEM(EntityType.IRON_GOLEM, LivingEntityAffection.NEUTRAL), //
+	SPIDER(EntityType.SPIDER, LivingEntityAffection.AGGRESSIVE), //
+	SQUID(EntityType.SQUID, LivingEntityAffection.FRIENDLY), //
+	VILLAGER(EntityType.VILLAGER, LivingEntityAffection.FRIENDLY), //
+	WITCH(EntityType.WITCH, LivingEntityAffection.AGGRESSIVE), //
 	WITHER(EntityType.WITHER, LivingEntityAffection.AGGRESSIVE), //
 	// WITHER_SKELETON(???, LivingEntityAffection.AGGRESSIVE), //
-	WITCH(EntityType.WITCH, LivingEntityAffection.AGGRESSIVE), //
-	BAT(EntityType.BAT, LivingEntityAffection.NEUTRAL);
+	WOLF(EntityType.WOLF, LivingEntityAffection.NEUTRAL), //
+	ZOMBIE(EntityType.ZOMBIE, LivingEntityAffection.AGGRESSIVE);
 
 	/**
 	 * Get the type of the given entity instance.
