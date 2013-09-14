@@ -22,7 +22,12 @@
  */
 package li.cryx.minecraft.util;
 
+import li.cryx.minecraft.death.perm.PermissionsExManager;
+import li.cryx.minecraft.death.perm.PermissionsManager;
+
+import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permissible;
+import org.bukkit.plugin.Plugin;
 
 /**
  * This enum contains all the permission nodes of the plugin.
@@ -36,6 +41,22 @@ public enum PermNode {
 	FRAGS("spirithealer.frags"),
 	/** Player can build new altars. */
 	ALTAR("spirithealer.altar");
+
+	private static PermissionsManager perm;
+
+	static {
+		Plugin permEx = Bukkit.getServer().getPluginManager()
+				.getPlugin("PermissionsEx");
+		if (permEx != null) {
+			perm = new PermissionsExManager();
+		} else {
+			perm = new PermissionsManager();
+		}
+	}
+
+	public static void setPermissionsManager(final PermissionsManager perm) {
+		PermNode.perm = perm;
+	}
 
 	private String node;
 
@@ -61,6 +82,6 @@ public enum PermNode {
 	 *         current permission node.
 	 */
 	public boolean hasPermission(final Permissible permissible) {
-		return permissible.hasPermission(getNode());
+		return perm.hasPermission(this, permissible);
 	}
 }

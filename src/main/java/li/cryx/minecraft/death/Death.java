@@ -173,6 +173,7 @@ public class Death extends JavaPlugin {
 	 * block is {@link Material#OBSIDIAN}.
 	 * </p>
 	 */
+	@SuppressWarnings("deprecation")
 	private void loadAltarMaterials() {
 		FileConfiguration conf = getConfig();
 

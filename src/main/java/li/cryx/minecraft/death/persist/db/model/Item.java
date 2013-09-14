@@ -142,6 +142,7 @@ public class Item {
 		this.id = id;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setItemStack(final ItemStack item) {
 		setMaterial(item.getType());
 		setData(item.getData().getData());
