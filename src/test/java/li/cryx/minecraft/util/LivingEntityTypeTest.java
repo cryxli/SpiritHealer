@@ -36,7 +36,7 @@ public class LivingEntityTypeTest {
 	@Test
 	public void getType() {
 		// make the test fail when LivingEntityType is changed.
-		Assert.assertEquals(29, LivingEntityType.values().length);
+		Assert.assertEquals(30, LivingEntityType.values().length);
 
 		// read test starts here
 		Assert.assertEquals(LivingEntityType.PLAYER,
@@ -97,5 +97,8 @@ public class LivingEntityTypeTest {
 				LivingEntityType.getType(EntityType.BAT));
 		Assert.assertEquals(LivingEntityType.HORSE,
 				LivingEntityType.getType(EntityType.HORSE));
+		// unused
+		Assert.assertEquals(LivingEntityType.GIANT_ZOMBIE,
+				LivingEntityType.getType(EntityType.GIANT));
 	}
 }

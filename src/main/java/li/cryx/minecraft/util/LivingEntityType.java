@@ -63,7 +63,8 @@ public enum LivingEntityType {
 	WITHER(EntityType.WITHER, LivingEntityAffection.AGGRESSIVE), //
 	// WITHER_SKELETON(???, LivingEntityAffection.AGGRESSIVE), //
 	WOLF(EntityType.WOLF, LivingEntityAffection.NEUTRAL), //
-	ZOMBIE(EntityType.ZOMBIE, LivingEntityAffection.AGGRESSIVE);
+	ZOMBIE(EntityType.ZOMBIE, LivingEntityAffection.AGGRESSIVE), //
+	GIANT_ZOMBIE(EntityType.GIANT, LivingEntityAffection.AGGRESSIVE);
 
 	/**
 	 * Get the type of the given entity instance.

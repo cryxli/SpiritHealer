@@ -1042,6 +1042,10 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void setResourcePack(final String url) {
+	}
+
+	@Override
 	public void setSaturation(final float value) {
 	}
 
