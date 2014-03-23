@@ -198,6 +198,38 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public void decrementStatistic(final Statistic paramStatistic)
+			throws IllegalArgumentException {
+	}
+
+	@Override
+	public void decrementStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType) throws IllegalArgumentException {
+	}
+
+	@Override
+	public void decrementStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType, final int paramInt) {
+	}
+
+	@Override
+	public void decrementStatistic(final Statistic paramStatistic,
+			final int paramInt) throws IllegalArgumentException {
+
+	}
+
+	@Override
+	public void decrementStatistic(final Statistic paramStatistic,
+			final Material paramMaterial) throws IllegalArgumentException {
+	}
+
+	@Override
+	public void decrementStatistic(final Statistic paramStatistic,
+			final Material paramMaterial, final int paramInt)
+			throws IllegalArgumentException {
+	}
+
+	@Override
 	public boolean eject() {
 		return false;
 	}
@@ -511,6 +543,24 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public int getStatistic(final Statistic paramStatistic)
+			throws IllegalArgumentException {
+		return 0;
+	}
+
+	@Override
+	public int getStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType) throws IllegalArgumentException {
+		return 0;
+	}
+
+	@Override
+	public int getStatistic(final Statistic paramStatistic,
+			final Material paramMaterial) throws IllegalArgumentException {
+		return 0;
+	}
+
+	@Override
 	public Block getTargetBlock(final HashSet<Byte> transparent,
 			final int maxDistance) {
 		return null;
@@ -565,6 +615,11 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public boolean hasAchievement(final Achievement paramAchievement) {
+		return false;
+	}
+
+	@Override
 	public boolean hasLineOfSight(final Entity other) {
 		return false;
 	}
@@ -600,6 +655,17 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void incrementStatistic(final Statistic statistic) {
+	}
+
+	@Override
+	public void incrementStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType) throws IllegalArgumentException {
+	}
+
+	@Override
+	public void incrementStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType, final int paramInt)
+			throws IllegalArgumentException {
 	}
 
 	@Override
@@ -737,6 +803,12 @@ public class DummyPlayer implements Player {
 	}
 
 	@Override
+	public <T extends Projectile> T launchProjectile(
+			final Class<? extends T> paramClass, final Vector paramVector) {
+		return null;
+	}
+
+	@Override
 	public boolean leaveVehicle() {
 		return false;
 	}
@@ -812,6 +884,10 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void remove() {
+	}
+
+	@Override
+	public void removeAchievement(final Achievement paramAchievement) {
 	}
 
 	@Override
@@ -1064,6 +1140,22 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void setSprinting(final boolean sprinting) {
+	}
+
+	@Override
+	public void setStatistic(final Statistic paramStatistic,
+			final EntityType paramEntityType, final int paramInt) {
+	}
+
+	@Override
+	public void setStatistic(final Statistic paramStatistic, final int paramInt)
+			throws IllegalArgumentException {
+	}
+
+	@Override
+	public void setStatistic(final Statistic paramStatistic,
+			final Material paramMaterial, final int paramInt)
+			throws IllegalArgumentException {
 	}
 
 	@Override

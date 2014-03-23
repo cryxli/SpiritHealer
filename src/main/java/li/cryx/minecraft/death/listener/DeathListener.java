@@ -61,8 +61,9 @@ public class DeathListener implements Listener {
 	private LivingEntity findKiller(final EntityDamageEvent dmg) {
 		if (dmg instanceof EntityDamageByEntityEvent) {
 			Entity damager = ((EntityDamageByEntityEvent) dmg).getDamager();
-			if (damager instanceof Projectile) {
-				return ((Projectile) damager).getShooter();
+			if ((damager instanceof Projectile)
+					&& ((Projectile) damager).getShooter() instanceof LivingEntity) {
+				return (LivingEntity) ((Projectile) damager).getShooter();
 			} else if (damager != null && damager instanceof LivingEntity) {
 				return (LivingEntity) damager;
 			}
