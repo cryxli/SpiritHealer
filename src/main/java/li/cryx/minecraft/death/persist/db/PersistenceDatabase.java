@@ -115,7 +115,8 @@ public class PersistenceDatabase extends AbstractPersistManager {
 	 */
 	private List<Item> getItems(final Player player) {
 		Query<Item> query = plugin.getDatabase().createQuery(Item.class);
-		query.where().eq("player", player.getName());
+		// query.where().eq("player", player.getName());
+		query.where().eq("playerUuid", player.getUniqueId().toString());
 		return query.findList();
 	}
 
@@ -146,7 +147,8 @@ public class PersistenceDatabase extends AbstractPersistManager {
 	@Override
 	public boolean hasInventory(final Player player) {
 		Query<Item> query = plugin.getDatabase().createQuery(Item.class);
-		query.where().eq("player", player.getName());
+		// query.where().eq("player", player.getName());
+		query.where().eq("playerUuid", player.getUniqueId().toString());
 		return query.findRowCount() > 0;
 	}
 

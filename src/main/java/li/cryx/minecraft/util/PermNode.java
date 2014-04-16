@@ -36,11 +36,11 @@ import org.bukkit.plugin.Plugin;
  */
 public enum PermNode {
 	/** SpiritHealer will prevent item drops on death. */
-	INVENTORY("spirithealer.inventory"),
+	INVENTORY("spirithealer.inventory", false),
 	/** SpiritHealer will count deaths and kills. */
-	FRAGS("spirithealer.frags"),
+	FRAGS("spirithealer.frags", false),
 	/** Player can build new altars. */
-	ALTAR("spirithealer.altar");
+	ALTAR("spirithealer.altar", true);
 
 	private static PermissionsManager perm;
 
@@ -60,8 +60,11 @@ public enum PermNode {
 
 	private String node;
 
-	private PermNode(final String node) {
+	private boolean fallbackToOp;
+
+	private PermNode(final String node, final boolean fallbackToOp) {
 		this.node = node;
+		this.fallbackToOp = fallbackToOp;
 	}
 
 	/**
@@ -82,6 +85,7 @@ public enum PermNode {
 	 *         current permission node.
 	 */
 	public boolean hasPermission(final Permissible permissible) {
-		return perm.hasPermission(this, permissible);
+		return perm.hasPermission(this, permissible) //
+				|| (fallbackToOp && permissible.isOp());
 	}
 }

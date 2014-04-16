@@ -57,6 +57,9 @@ public class Item {
 	private String player;
 
 	@Column(nullable = false)
+	private String playerUuid;
+
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Material material;
 
@@ -122,6 +125,10 @@ public class Item {
 		return player;
 	}
 
+	public String getPlayerUuid() {
+		return playerUuid;
+	}
+
 	public void setAmount(final int amount) {
 		this.amount = amount;
 	}
@@ -165,6 +172,11 @@ public class Item {
 
 	public void setPlayerEntity(final Player player) {
 		setPlayer(player.getName());
+		setPlayerUuid(player.getUniqueId().toString());
+	}
+
+	public void setPlayerUuid(final String playerUuid) {
+		this.playerUuid = playerUuid;
 	}
 
 	public String toJson() {

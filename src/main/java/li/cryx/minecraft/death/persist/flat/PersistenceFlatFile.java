@@ -188,7 +188,8 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	 * @return A <code>File</code> object.
 	 */
 	private File getInventoryFile(final Player player) {
-		return new File(itemFolder, player.getName().toLowerCase() + ".yml");
+		// return new File(itemFolder, player.getName().toLowerCase() + ".yml");
+		return new File(itemFolder, player.getUniqueId().toString() + ".yml");
 	}
 
 	private synchronized YamlConfiguration getKills(final Player player) {
@@ -263,6 +264,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 				data.set("item" + counter, item);
 				counter++;
 			}
+			data.set("playerName", player.getName());
 			data.save(getInventoryFile(player));
 			return true;
 		} catch (IOException e) {

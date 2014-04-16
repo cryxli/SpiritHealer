@@ -76,8 +76,19 @@ public class DummyPlayer implements Player {
 
 	private final String name;
 
+	private final UUID uuid;
+
 	public DummyPlayer(final String name) {
+		this(name, null);
+	}
+
+	public DummyPlayer(final String name, final String uuid) {
 		this.name = name;
+		if (uuid != null) {
+			this.uuid = UUID.fromString(uuid);
+		} else {
+			this.uuid = new UUID(0, name.hashCode());
+		}
 	}
 
 	@Override
@@ -583,7 +594,7 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public UUID getUniqueId() {
-		return null;
+		return uuid;
 	}
 
 	@Override
@@ -954,6 +965,11 @@ public class DummyPlayer implements Player {
 
 	@Override
 	public void sendRawMessage(final String message) {
+	}
+
+	@Override
+	public void sendSignChange(final Location location, final String[] lines)
+			throws IllegalArgumentException {
 	}
 
 	@Override

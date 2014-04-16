@@ -25,7 +25,7 @@ package li.cryx.minecraft.death.listener;
 import li.cryx.minecraft.death.Death;
 import li.cryx.minecraft.util.PermNode;
 
-import org.bukkit.WorldType;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -61,7 +61,7 @@ public class BlockListener implements Listener {
 		}
 
 		Block block = event.getBlockPlaced();
-		if (block.getWorld().getWorldType() != WorldType.NORMAL) {
+		if (block.getWorld().getEnvironment() != Environment.NORMAL) {
 			return;
 		} else if (block.getType() != plugin.getAltarMaterial()) {
 			return;
