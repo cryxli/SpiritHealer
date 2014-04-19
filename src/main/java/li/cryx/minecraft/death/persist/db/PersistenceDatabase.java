@@ -103,7 +103,7 @@ public class PersistenceDatabase extends AbstractPersistManager {
 
 	@Override
 	public FragsInfo getFrags(final Player player) {
-		return new FragsInfoDelegator(this, player.getName());
+		return new FragsInfoDelegator(this, player);
 	}
 
 	/**
@@ -123,20 +123,22 @@ public class PersistenceDatabase extends AbstractPersistManager {
 	/**
 	 * Get the kills/death info for a player and opponent type.
 	 * 
-	 * @param playerName
-	 *            The player
+	 * @param playerUuid
+	 *            The player's UUID
 	 * @param type
 	 *            The opponent
 	 * @return The {@link Kills} object counting kills and deaths
 	 */
-	Kills getSingleKillEntry(final String playerName,
-			final LivingEntityType type) {
+	Kills getSingleKillEntry(final Player player, final LivingEntityType type) {
 		Query<Kills> query = plugin.getDatabase().find(Kills.class);
-		query.where().eq("player", playerName).eq("entity", type).setMaxRows(1);
+		// query.where().eq("player", playerName).eq("entity", type)
+		// .setMaxRows(1);
+		query.where().eq("playerUuid", player.getUniqueId().toString())
+				.eq("entity", type).setMaxRows(1);
 		List<Kills> kills = query.findList();
 		if (kills == null || kills.size() == 0) {
 			Kills k = plugin.getDatabase().createEntityBean(Kills.class);
-			k.setPlayer(playerName);
+			k.setPlayerEntity(player);
 			k.setEntity(type);
 			return k;
 		} else {
@@ -154,14 +156,14 @@ public class PersistenceDatabase extends AbstractPersistManager {
 
 	@Override
 	public void increaseDeaths(final Player player, final LivingEntityType type) {
-		Kills kill = getSingleKillEntry(player.getName(), type);
+		Kills kill = getSingleKillEntry(player, type);
 		kill.increaseDeaths();
 		plugin.getDatabase().save(kill);
 	}
 
 	@Override
 	public void increaseKills(final Player player, final LivingEntityType type) {
-		Kills kill = getSingleKillEntry(player.getName(), type);
+		Kills kill = getSingleKillEntry(player, type);
 		kill.increaseKills();
 		plugin.getDatabase().save(kill);
 	}

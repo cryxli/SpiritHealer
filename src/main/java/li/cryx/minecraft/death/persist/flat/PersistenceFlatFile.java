@@ -159,7 +159,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 	public Location getDeathLocation(final Player player) {
 		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
 
-		String name = player.getName();
+		String name = player.getUniqueId().toString();
 		World world = player.getServer().getWorld(
 				yml.getString(name + ".world"));
 		if (world == null) {
@@ -196,7 +196,7 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 		YamlConfiguration kp = kills.get(player);
 		if (kp == null) {
 			kp = YamlConfiguration.loadConfiguration(new File(countFolder,
-					player.getName().toLowerCase() + ".yml"));
+					player.getUniqueId().toString() + ".yml"));
 			kills.put(player, kp);
 			timeout.put(player, NOT_DIRTY_TICK);
 		}
@@ -242,7 +242,8 @@ public class PersistenceFlatFile extends AbstractPersistManager {
 		Location loc = player.getLocation();
 		YamlConfiguration yml = getKills(DEATH_LOC_PLAYER);
 
-		String name = player.getName();
+		String name = player.getUniqueId().toString();
+		yml.set(name + ".name", player.getName());
 		yml.set(name + ".world", player.getWorld().getName());
 		yml.set(name + ".x", loc.getX());
 		yml.set(name + ".y", loc.getY());

@@ -31,6 +31,8 @@ import javax.persistence.Table;
 
 import li.cryx.minecraft.util.LivingEntityType;
 
+import org.bukkit.entity.Player;
+
 /**
  * Structure to store kills and deaths of a player and {@link LivingEntityType}.
  * 
@@ -46,6 +48,9 @@ public class Kills {
 
 	@Column(name = "player", nullable = false)
 	private String player;
+
+	@Column(name = "player_uuid", nullable = false)
+	private String playerUuid;
 
 	@Column(name = "entity", nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -77,6 +82,10 @@ public class Kills {
 		return player;
 	}
 
+	public String getPlayerUuid() {
+		return playerUuid;
+	}
+
 	public void increaseDeaths() {
 		setDeaths(getDeaths() + 1);
 	}
@@ -103,6 +112,15 @@ public class Kills {
 
 	public void setPlayer(final String player) {
 		this.player = player;
+	}
+
+	public void setPlayerEntity(final Player player) {
+		setPlayer(player.getName());
+		setPlayerUuid(player.getUniqueId().toString());
+	}
+
+	public void setPlayerUuid(final String playerUuid) {
+		this.playerUuid = playerUuid;
 	}
 
 	public String toJson() {

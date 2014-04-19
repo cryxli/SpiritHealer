@@ -27,6 +27,7 @@ import li.cryx.minecraft.util.LivingEntityAffection;
 import li.cryx.minecraft.util.LivingEntityType;
 
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 /**
  * This class delegates kills and deaths requests to the database.
@@ -37,12 +38,12 @@ public class FragsInfoDelegator implements FragsInfo {
 	/** Reference to the DAO */
 	private final PersistenceDatabase database;
 	/** Name of the player for this {@link FragsInfo} */
-	private final String playerName;
+	private final Player player;
 
 	public FragsInfoDelegator(final PersistenceDatabase database,
-			final String playerName) {
+			final Player player) {
 		this.database = database;
-		this.playerName = playerName;
+		this.player = player;
 	}
 
 	@Override
@@ -61,7 +62,7 @@ public class FragsInfoDelegator implements FragsInfo {
 
 	@Override
 	public int getDeaths(final LivingEntityType type) {
-		return database.getSingleKillEntry(playerName, type).getDeaths();
+		return database.getSingleKillEntry(player, type).getDeaths();
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class FragsInfoDelegator implements FragsInfo {
 
 	@Override
 	public int getKills(final LivingEntityType type) {
-		return database.getSingleKillEntry(playerName, type).getKills();
+		return database.getSingleKillEntry(player, type).getKills();
 	}
 
 }
