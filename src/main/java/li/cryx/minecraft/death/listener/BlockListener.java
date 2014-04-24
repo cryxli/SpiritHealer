@@ -22,7 +22,7 @@
  */
 package li.cryx.minecraft.death.listener;
 
-import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.death.ISpiritHealer;
 import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.World.Environment;
@@ -43,9 +43,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
  */
 public class BlockListener implements Listener {
 
-	private final Death plugin;
+	private final ISpiritHealer plugin;
 
-	public BlockListener(final Death plugin) {
+	public BlockListener(final ISpiritHealer plugin) {
 		this.plugin = plugin;
 	}
 

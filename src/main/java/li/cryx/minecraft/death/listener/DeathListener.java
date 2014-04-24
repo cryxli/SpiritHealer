@@ -22,7 +22,7 @@
  */
 package li.cryx.minecraft.death.listener;
 
-import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.death.ISpiritHealer;
 import li.cryx.minecraft.util.LivingEntityType;
 import li.cryx.minecraft.util.PermNode;
 
@@ -45,9 +45,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  */
 public class DeathListener implements Listener {
 
-	private final Death plugin;
+	private final ISpiritHealer plugin;
 
-	public DeathListener(final Death plugin) {
+	public DeathListener(final ISpiritHealer plugin) {
 		this.plugin = plugin;
 	}
 

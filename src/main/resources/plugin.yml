@@ -4,7 +4,7 @@ version: ${project.version}
 database: true
 description: >
              ${project.name} is a death/frag plugin for bukkit.
-softdepend: [PermissionsEx]
+softdepend: [PermissionsEx,MinecraftACL,Language]
 
 commands:
   frags:

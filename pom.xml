@@ -43,7 +43,13 @@
 		<dependency>
 			<groupId>ru.tehkode</groupId>
 			<artifactId>PermissionsEx</artifactId>
-			<version>1.20.2</version>
+			<version>1.21.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>li.cryx.mc.acl</groupId>
+			<artifactId>mcacl-lang</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -73,6 +79,16 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+					<include>*.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>*.yml</exclude>
+				</excludes>
 			</resource>
 		</resources>
 		<plugins>
@@ -94,7 +110,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<main.class>li.cryx.minecraft.death.Death</main.class>
 
-<!-- 		<bukkit.version>1.7.2-R0.3</bukkit.version> -->		
 		<bukkit.version>1.7.9-R0.1-SNAPSHOT</bukkit.version>
 	</properties>
 </project>

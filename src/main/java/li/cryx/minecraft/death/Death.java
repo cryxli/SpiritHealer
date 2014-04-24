@@ -30,6 +30,9 @@ import java.util.logging.Level;
 
 import javax.persistence.PersistenceException;
 
+import li.cryx.minecraft.death.i18n.AclLanguage;
+import li.cryx.minecraft.death.i18n.FallbackTranslation;
+import li.cryx.minecraft.death.i18n.ITranslator;
 import li.cryx.minecraft.death.listener.BlockListener;
 import li.cryx.minecraft.death.listener.DeathListener;
 import li.cryx.minecraft.death.listener.PlayerInteractListener;
@@ -43,6 +46,7 @@ import li.cryx.minecraft.death.persist.db.model.Kills;
 import li.cryx.minecraft.death.persist.flat.PersistenceFlatFile;
 import li.cryx.minecraft.util.PermNode;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -51,6 +55,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,7 +64,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author cryxli
  */
-public class Death extends JavaPlugin {
+public class Death extends JavaPlugin implements ISpiritHealer {
 
 	/** Capture player deaths. */
 	private DeathListener playerListener;
@@ -76,6 +81,8 @@ public class Death extends JavaPlugin {
 	/** Store inventories on death */
 	private AbstractPersistManager persist;
 
+	private ITranslator i18n;
+
 	private Material altarMaterial;
 
 	private Material altarBaseMaterial;
@@ -85,6 +92,7 @@ public class Death extends JavaPlugin {
 	 * 
 	 * @param location
 	 */
+	@Override
 	public void addAltarLocation(final Location location) {
 		if (location != null && !isAltar(location)) {
 			altars.add(location);
@@ -113,10 +121,12 @@ public class Death extends JavaPlugin {
 		pm.registerEvents(altarListener, this);
 	}
 
+	@Override
 	public Material getAltarBaseMaterial() {
 		return altarBaseMaterial;
 	}
 
+	@Override
 	public Material getAltarMaterial() {
 		return altarMaterial;
 	}
@@ -131,10 +141,17 @@ public class Death extends JavaPlugin {
 		return classes;
 	}
 
+	@Override
 	public AbstractPersistManager getPersist() {
 		return persist;
 	}
 
+	@Override
+	public ITranslator getTranslator() {
+		return i18n;
+	}
+
+	@Override
 	public boolean isAltar(final Location location) {
 		return altars.contains(location);
 	}
@@ -255,9 +272,20 @@ public class Death extends JavaPlugin {
 			persist = new PersistenceDatabase(this);
 		}
 
+		// translations
+		Plugin language = Bukkit.getServer().getPluginManager()
+				.getPlugin("Language");
+		if (language != null) {
+			i18n = new AclLanguage(this);
+		} else {
+			i18n = new FallbackTranslation();
+		}
+		CommandMessage.setPlugin(this);
+
 		getLogger().info(getDescription().getFullName() + " enabled");
 	}
 
+	@Override
 	public void restoreItems(final Player player) {
 		List<ItemStack> items = persist.restoreItems(player);
 		if (items == null || items.size() == 0) {

@@ -21,6 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package li.cryx.minecraft.death;
+
+import li.cryx.minecraft.death.i18n.ITranslator;
+import li.cryx.minecraft.death.i18n.LangKeys;
 import li.cryx.minecraft.death.persist.FragsInfo;
 import li.cryx.minecraft.util.LivingEntityAffection;
 import li.cryx.minecraft.util.LivingEntityType;
@@ -28,31 +31,42 @@ import li.cryx.minecraft.util.LivingEntityType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-
 public enum CommandMessage {
 	INSTANCE;
 
+	private static ITranslator i18n;
+
+	public static void setPlugin(final ISpiritHealer plugin) {
+		CommandMessage.i18n = plugin.getTranslator();
+	}
+
+	private ChatColor color(final int value) {
+		if (value == 0) {
+			return ChatColor.WHITE;
+		} else if (value < 0) {
+			return ChatColor.RED;
+		} else {
+			return ChatColor.GREEN;
+		}
+	}
+
 	private void sendDetailed(final CommandSender sender, final FragsInfo info) {
-		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
+		i18n.sendMessage(sender, LangKeys.FRAGS.TITLE);
 		boolean kills = false;
 		for (LivingEntityType t : LivingEntityType.values()) {
 			if (info.getDeaths(t) > 0 || info.getKills(t) > 0) {
-				StringBuffer buf = new StringBuffer();
-				buf.append(ChatColor.YELLOW);
-				buf.append(t.toString());
-				buf.append(' ');
-				buf.append(ChatColor.GREEN);
-				buf.append(info.getKills(t));
-				buf.append(ChatColor.YELLOW);
-				buf.append("/");
-				buf.append(ChatColor.RED);
-				buf.append(info.getDeaths(t));
-				sender.sendMessage(buf.toString());
+				i18n.sendMessage( //
+						sender, //
+						LangKeys.FRAGS.DETAIL_LINE, //
+						i18n.translate(sender, t.toString()), //
+						info.getKills(t), //
+						info.getDeaths(t) //
+				);
 				kills = true;
 			}
 		}
 		if (!kills) {
-			sender.sendMessage(ChatColor.GOLD + "no kills/deaths yet");
+			i18n.sendMessage(sender, LangKeys.FRAGS.NO_DATA);
 		}
 	}
 
@@ -82,51 +96,35 @@ public enum CommandMessage {
 
 	/** Send the complete list of kills and deaths to the player. */
 	private void sendFull(final CommandSender sender, final FragsInfo info) {
-		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
-
-		StringBuffer buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("PVP: ");
-		buf.append(ChatColor.GREEN);
-		buf.append(info.getKills(LivingEntityAffection.PVP));
-		buf.append(ChatColor.YELLOW);
-		buf.append("/");
-		buf.append(ChatColor.RED);
-		buf.append(info.getDeaths(LivingEntityAffection.PVP));
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Aggressive mobs: ");
-		buf.append(ChatColor.GREEN);
-		buf.append(info.getKills(LivingEntityAffection.AGGRESSIVE));
-		buf.append(ChatColor.YELLOW);
-		buf.append("/");
-		buf.append(ChatColor.RED);
-		buf.append(info.getDeaths(LivingEntityAffection.AGGRESSIVE));
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Neutral mobs: ");
-		buf.append(ChatColor.GREEN);
-		buf.append(info.getKills(LivingEntityAffection.NEUTRAL));
-		buf.append(ChatColor.YELLOW);
-		buf.append("/");
-		buf.append(ChatColor.RED);
-		buf.append(info.getDeaths(LivingEntityAffection.NEUTRAL));
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Friendly mobs: ");
-		buf.append(ChatColor.GREEN);
-		buf.append(info.getKills(LivingEntityAffection.FRIENDLY));
-		buf.append(ChatColor.YELLOW);
-		buf.append("/");
-		buf.append(ChatColor.RED);
-		buf.append(info.getDeaths(LivingEntityAffection.FRIENDLY));
-		sender.sendMessage(buf.toString());
+		i18n.sendMessage(sender, LangKeys.FRAGS.TITLE);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.DETAIL_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_PVP), //
+				info.getKills(LivingEntityAffection.PVP), //
+				info.getDeaths(LivingEntityAffection.PVP) //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.DETAIL_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_AGGRO), //
+				info.getKills(LivingEntityAffection.AGGRESSIVE), //
+				info.getDeaths(LivingEntityAffection.AGGRESSIVE) //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.DETAIL_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_NEUTRAL), //
+				info.getKills(LivingEntityAffection.NEUTRAL), //
+				info.getDeaths(LivingEntityAffection.NEUTRAL) //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.DETAIL_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_FRIENDLY), //
+				info.getKills(LivingEntityAffection.FRIENDLY), //
+				info.getDeaths(LivingEntityAffection.FRIENDLY) //
+		);
 	}
 
 	/** Send the minimalistic list of kills and deaths to the player. */
@@ -140,59 +138,34 @@ public enum CommandMessage {
 		int friend = info.getKills(LivingEntityAffection.FRIENDLY)
 				- info.getDeaths(LivingEntityAffection.FRIENDLY);
 
-		sender.sendMessage(ChatColor.GOLD + "===== Your kills =====");
-
-		StringBuffer buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("PVP: ");
-		if (pvp == 0) {
-			buf.append(ChatColor.WHITE);
-		} else if (pvp < 0) {
-			buf.append(ChatColor.RED);
-		} else {
-			buf.append(ChatColor.GREEN);
-		}
-		buf.append(pvp);
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Aggressive mobs: ");
-		if (aggro == 0) {
-			buf.append(ChatColor.WHITE);
-		} else if (aggro < 0) {
-			buf.append(ChatColor.RED);
-		} else {
-			buf.append(ChatColor.GREEN);
-		}
-		buf.append(aggro);
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Neutral mobs: ");
-		if (neutral == 0) {
-			buf.append(ChatColor.WHITE);
-		} else if (neutral < 0) {
-			buf.append(ChatColor.RED);
-		} else {
-			buf.append(ChatColor.GREEN);
-		}
-		buf.append(neutral);
-		sender.sendMessage(buf.toString());
-
-		buf = new StringBuffer();
-		buf.append(ChatColor.YELLOW);
-		buf.append("Friendly mobs: ");
-		if (friend == 0) {
-			buf.append(ChatColor.WHITE);
-		} else if (friend < 0) {
-			buf.append(ChatColor.RED);
-		} else {
-			buf.append(ChatColor.GREEN);
-		}
-		buf.append(friend);
-		sender.sendMessage(buf.toString());
+		i18n.sendMessage(sender, LangKeys.FRAGS.TITLE);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.MIN_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_PVP), //
+				color(pvp), //
+				pvp //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.MIN_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_AGGRO), //
+				color(aggro), //
+				aggro //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.MIN_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_NEUTRAL), //
+				color(neutral), //
+				neutral //
+		);
+		i18n.sendMessage( //
+				sender, //
+				LangKeys.FRAGS.MIN_LINE, //
+				i18n.translate(sender, LangKeys.FRAGS.TYPE_FRIENDLY), //
+				color(friend), //
+				friend //
+		);
 	}
-
 }

@@ -45,9 +45,13 @@ public enum PermNode {
 	private static PermissionsManager perm;
 
 	static {
+		Plugin permAcl = Bukkit.getServer().getPluginManager()
+				.getPlugin("MinecraftACL");
 		Plugin permEx = Bukkit.getServer().getPluginManager()
 				.getPlugin("PermissionsEx");
-		if (permEx != null) {
+		if (permAcl != null) {
+			perm = new PermissionsManager();
+		} else if (permEx != null) {
 			perm = new PermissionsExManager();
 		} else {
 			perm = new PermissionsManager();

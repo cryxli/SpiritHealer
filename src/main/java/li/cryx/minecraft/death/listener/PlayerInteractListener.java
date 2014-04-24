@@ -25,7 +25,8 @@ package li.cryx.minecraft.death.listener;
 import java.util.HashMap;
 import java.util.Map;
 
-import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.death.ISpiritHealer;
+import li.cryx.minecraft.death.i18n.LangKeys;
 import li.cryx.minecraft.util.PermNode;
 
 import org.bukkit.Material;
@@ -47,12 +48,12 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerInteractListener implements Listener {
 
 	/** Reference to plugin. */
-	private final Death plugin;
+	private final ISpiritHealer plugin;
 
 	/** Keep warnings for players. */
 	private final Map<Player, Integer> warnings = new HashMap<Player, Integer>();
 
-	public PlayerInteractListener(final Death plugin) {
+	public PlayerInteractListener(final ISpiritHealer plugin) {
 		this.plugin = plugin;
 	}
 
@@ -101,8 +102,8 @@ public class PlayerInteractListener implements Listener {
 				if (plugin.getPersist().hasInventory(player)) {
 					plugin.restoreItems(player);
 				} else {
-					player.sendMessage(plugin.getConfig().getString(
-							"YouAreNotDead"));
+					plugin.getTranslator().sendMessage(player,
+							LangKeys.SPIRITHEALER.NOT_DEAD);
 				}
 			}
 		} else {
@@ -126,23 +127,27 @@ public class PlayerInteractListener implements Listener {
 		switch (warn) {
 		case 1:
 			// first time, just warn the player
-			player.sendMessage(plugin.getConfig().getString("NoWeapons"));
+			plugin.getTranslator().sendMessage(player,
+					LangKeys.SPIRITHEALER.WARNING);
 			break;
 		case 2:
-			player.sendMessage(plugin.getConfig().getString("Warn1"));
+			plugin.getTranslator().sendMessage(player,
+					LangKeys.SPIRITHEALER.WARNING1);
 			// half the hunger bar
 			player.setExhaustion(player.getExhaustion() / 2);
 			player.setFoodLevel((int) Math.ceil(player.getFoodLevel() / 2.0));
 			break;
 		case 3:
-			player.sendMessage(plugin.getConfig().getString("Warn2"));
+			plugin.getTranslator().sendMessage(player,
+					LangKeys.SPIRITHEALER.WARNING2);
 			// half the health bar
 			player.setHealth(player.getHealth() / 2);
 			break;
 		default:
 		case 4:
 			// kick the player
-			player.kickPlayer(plugin.getConfig().getString("Warn3"));
+			player.kickPlayer(plugin.getTranslator().translate(player,
+					LangKeys.SPIRITHEALER.WARNING3));
 			plugin.getLogger().info("kicked " + player.getName());
 			warn = 4;
 			break;

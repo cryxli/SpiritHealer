@@ -3,6 +3,7 @@ package li.cryx.minecraft.death.listener;
 import java.util.logging.Logger;
 
 import li.cryx.minecraft.death.Death;
+import li.cryx.minecraft.death.ISpiritHealer;
 import li.cryx.minecraft.death.perm.PermissionsManager;
 import li.cryx.minecraft.util.PermNode;
 
@@ -49,7 +50,7 @@ public class BlockListenerTest {
 	 * We want to check how often the method
 	 * {@link Death#addAltarLocation(Location)} was called.
 	 */
-	private Death plugin;
+	private ISpiritHealer plugin;
 
 	/** The listener we want to test. */
 	private BlockListener listener;
@@ -123,7 +124,7 @@ public class BlockListenerTest {
 
 	@Before
 	public void initListener() {
-		plugin = Mockito.mock(Death.class);
+		plugin = Mockito.mock(ISpiritHealer.class);
 		Mockito.when(plugin.getAltarMaterial())
 				.thenReturn(Material.ENDER_STONE);
 		Mockito.when(plugin.getAltarBaseMaterial()).thenReturn(
