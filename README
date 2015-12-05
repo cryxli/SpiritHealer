@@ -4,6 +4,9 @@ SpiritHealer
 This project is a bukkit plugin to manage player deaths and kills. The current source is compatible to 
 bukkit's 1.7.8-R0.1 beta release.
 
+Since development of bukkit has stopped, this plugin is done, too. A Minecraft Forge mod that handles
+death inventories could be OpenBlocks. 
+
 
 Description
 -----------
